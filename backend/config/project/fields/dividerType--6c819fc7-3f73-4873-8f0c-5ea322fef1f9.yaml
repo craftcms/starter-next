@@ -1,0 +1,32 @@
+columnSuffix: null
+handle: dividerType
+instructions: null
+name: 'Divider type'
+searchable: false
+settings:
+  options:
+    -
+      __assoc__:
+        -
+          - label
+          - Rule
+        -
+          - value
+          - rule
+        -
+          - default
+          - ''
+    -
+      __assoc__:
+        -
+          - label
+          - Space
+        -
+          - value
+          - space
+        -
+          - default
+          - ''
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Dropdown

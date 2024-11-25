@@ -1,0 +1,7 @@
+isPublic: false
+name: Guestbook
+scope:
+  - 'sites.58ccb571-6c72-449f-8e7b-6f43c5d416b3:read' # Next Starter
+  - 'sections.3e2a1a6f-88ea-477b-936d-39393f2d594f:read' # Guestbook Posts
+  - 'sections.3e2a1a6f-88ea-477b-936d-39393f2d594f:edit' # Guestbook Posts
+  - 'sections.3e2a1a6f-88ea-477b-936d-39393f2d594f:create' # Guestbook Posts

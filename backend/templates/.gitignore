@@ -1,0 +1,10 @@
+# Hey!
+# Craft is running in “headless” mode, so it doesn’t make much use of this
+# directory. The `_partials/` folder, however, holds a few templates that
+# may be used to render a nested entry within a CKEditor field.
+# 
+# - Headless mode: https://craftcms.com/docs/5.x/reference/config/general.html#headlessmode
+# - Element partials: https://craftcms.com/docs/5.x/system/elements.html#element-partials
+# - CKEditor: https://github.com/craftcms/ckeditor
+# 
+# (Also—this file isn’t here to actually ignore anything! You are free to delete it.)

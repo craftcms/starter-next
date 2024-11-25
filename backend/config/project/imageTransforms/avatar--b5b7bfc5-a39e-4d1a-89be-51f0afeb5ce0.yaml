@@ -1,0 +1,11 @@
+fill: null
+format: null
+handle: avatar
+height: 1024
+interlace: plane
+mode: crop
+name: Avatar
+position: center-center
+quality: null
+upscale: true
+width: 1024

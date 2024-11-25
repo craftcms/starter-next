@@ -1,0 +1,22 @@
+columnSuffix: null
+handle: page
+instructions: null
+name: Page
+searchable: false
+settings:
+  allowSelfRelations: false
+  branchLimit: null
+  maintainHierarchy: false
+  maxRelations: 1
+  minRelations: 1
+  selectionLabel: 'Add page'
+  showCardsInGrid: false
+  showSiteMenu: true
+  sources:
+    - singles
+  targetSiteId: null
+  validateRelatedElements: false
+  viewMode: list
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Entries

@@ -1,0 +1,6 @@
+{% import '_utilities/image' as img %}
+
+<figure class="image-block my-12">
+  {% set assets = entry.image.eagerly().all() %}
+  {{ img.pictures(assets) }}
+</figure>

@@ -1,0 +1,27 @@
+columnSuffix: null
+handle: pageContent
+instructions: null
+name: 'Page content'
+searchable: true
+settings:
+  availableTransforms:
+    - 0922209d-2911-419e-82cf-b05113a35f6e # Wide
+  availableVolumes:
+    - 7b9364bd-2215-495a-8b0b-2280df887a8b # Media
+  ckeConfig: b579b454-12bd-4710-a436-c26907141957 # Full
+  createButtonLabel: 'New block'
+  defaultTransform: null
+  enableSourceEditingForNonAdmins: false
+  entryTypes:
+    - a06e695e-af7f-4a1b-84a7-575ec935e293 # Video
+    - 5358db38-27c0-49b4-b9d3-e68326e79da2 # Image
+    - f7576aa3-c155-4b54-82c9-8cb8c93495c9 # Callout
+  purifierConfig: null
+  purifyHtml: true
+  showUnpermittedFiles: false
+  showUnpermittedVolumes: false
+  showWordCount: true
+  wordLimit: null
+translationKeyFormat: null
+translationMethod: none
+type: craft\ckeditor\Field

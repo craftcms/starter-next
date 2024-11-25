@@ -1,0 +1,11 @@
+fill: null
+format: null
+handle: wide
+height: 1080
+interlace: plane
+mode: crop
+name: Wide
+position: center-center
+quality: 30
+upscale: true
+width: 1920

@@ -1,0 +1,67 @@
+color: orange
+fieldLayouts:
+  a1ab1ec3-213d-4bba-8215-4b7b456111a6:
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            dateAdded: '2024-08-20T09:10:56+00:00'
+            disabled: false
+            elementCondition: null
+            id: null
+            includeInCards: false
+            inputType: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            providesThumbs: false
+            readonly: false
+            requirable: false
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: 3bdf0c7d-0d25-4f7c-8287-59415b4b5c0c
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2024-08-20T09:12:38+00:00'
+            elementCondition: null
+            fieldUid: 9d082133-4710-4468-ab39-80db8c9fcf59 # Code
+            handle: embedCode
+            includeInCards: false
+            instructions: null
+            label: 'Embed code'
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: e34073d1-9f80-4e54-a691-6f32a694a432
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: 39d66e39-f720-4104-a64a-1482282eb0e7
+        userCondition: null
+handle: video
+hasTitleField: false
+icon: film
+name: Video
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

@@ -1,0 +1,11 @@
+fill: null
+format: webp
+handle: hero
+height: 1080
+interlace: none
+mode: crop
+name: Hero
+position: center-center
+quality: 60
+upscale: true
+width: 2048

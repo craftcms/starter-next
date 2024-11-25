@@ -1,0 +1,67 @@
+color: violet
+fieldLayouts:
+  f00ef8d9-b10c-4a28-a60e-5277f76636f3:
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            dateAdded: '2024-08-20T09:01:40+00:00'
+            disabled: false
+            elementCondition: null
+            id: null
+            includeInCards: false
+            inputType: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            providesThumbs: false
+            readonly: false
+            requirable: false
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: 434f527a-61b8-4386-a9d5-351aa02db45b
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2024-08-20T09:04:25+00:00'
+            elementCondition: null
+            fieldUid: 9d42aa56-4a66-4d0b-b8a9-84a4cb387788 # Text block
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: ff45a2cd-9b8f-492e-b70f-49d7fdbcdce8
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: ea21cde6-ed6d-4134-b16c-97380c9cfb97
+        userCondition: null
+handle: text
+hasTitleField: true
+icon: receipt
+name: Text
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: 'Post {now}'
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

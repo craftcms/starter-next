@@ -1,0 +1,30 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  - 5dd08fc8-3ea4-4582-952f-4c0f7ebf409e # Category
+handle: blogCategories
+maxAuthors: 1
+name: 'Blog Categories'
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{{ alias(''@preview'') }}/{uri}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  58ccb571-6c72-449f-8e7b-6f43c5d416b3: # Next Starter
+    enabledByDefault: true
+    hasUrls: true
+    template: null
+    uriFormat: 'categories/{slug}'
+structure:
+  maxLevels: null
+  uid: 3fa989b7-cc6c-402a-b995-5698a2b688ea
+type: structure

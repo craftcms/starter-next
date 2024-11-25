@@ -1,0 +1,22 @@
+columnSuffix: null
+handle: category
+instructions: null
+name: Category
+searchable: false
+settings:
+  allowSelfRelations: false
+  branchLimit: 1
+  maintainHierarchy: true
+  maxRelations: null
+  minRelations: null
+  selectionLabel: 'Add category'
+  showCardsInGrid: false
+  showSiteMenu: false
+  sources:
+    - 'section:70b2614b-639a-4de2-8c11-3851d36d6f8c' # Blog Categories
+  targetSiteId: null
+  validateRelatedElements: false
+  viewMode: list
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Entries

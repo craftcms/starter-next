@@ -1,0 +1,53 @@
+color: null
+fieldLayouts:
+  c250a111-95a7-4027-9739-9ff603802589:
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2024-08-21T04:09:37+00:00'
+            elementCondition: null
+            fieldUid: 6c9778b8-507c-4108-937d-6ceeabf35047 # Image
+            handle: logo
+            includeInCards: false
+            instructions: null
+            label: Logo
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 3ca47574-03ee-4e53-b004-c2184280db36
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2024-08-21T03:11:22+00:00'
+            elementCondition: null
+            fieldUid: 163c895f-0c05-4845-80e2-043b2346d830 # Address
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 6b8e65a2-d3b2-4bc3-a341-bcecd50aaf4b
+            userCondition: null
+            warning: null
+            width: 100
+        name: Header
+        uid: e59c6a9e-e2c2-4738-88f5-61ee419cf02e
+        userCondition: null
+handle: global
+hasTitleField: false
+icon: globe
+name: Global
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: Global
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

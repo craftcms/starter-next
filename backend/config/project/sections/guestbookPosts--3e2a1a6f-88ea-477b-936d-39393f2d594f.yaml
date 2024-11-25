@@ -1,0 +1,27 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  - 25b2446d-c1d2-4aa1-8184-3147e617f069 # Text
+handle: guestbookPosts
+maxAuthors: 1
+name: 'Guestbook Posts'
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{{ alias(''@preview'') }}/{uri}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  58ccb571-6c72-449f-8e7b-6f43c5d416b3: # Next Starter
+    enabledByDefault: true
+    hasUrls: true
+    template: null
+    uriFormat: 'posts/{slug}'
+type: channel

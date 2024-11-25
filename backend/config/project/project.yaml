@@ -1,0 +1,180 @@
+dateModified: 1732495147
+elementSources:
+  craft\elements\Entry:
+    -
+      condition:
+        class: craft\elements\conditions\entries\EntryCondition
+        conditionRules:
+          -
+            class: craft\elements\conditions\SlugConditionRule
+            operator: '='
+            uid: d81e0ca8-0443-4c79-a338-14e2c1fc8687
+            value: global
+        elementType: craft\elements\Entry
+        fieldContext: global
+      defaultSort:
+        - title
+        - asc
+      key: 'custom:6d0e2f9b-417a-4d0c-b23f-affe43c388c0'
+      label: Global
+      tableAttributes: '-'
+      type: custom
+    -
+      heading: Pages
+      type: heading
+    -
+      condition:
+        class: craft\elements\conditions\entries\EntryCondition
+        conditionRules:
+          -
+            class: craft\elements\conditions\entries\SectionConditionRule
+            operator: in
+            uid: 5690305a-9541-42b2-9e20-e0f68d6f7e30
+            values:
+              - 998bf681-e007-4f7e-a525-863e01a38560 # Blog
+              - aef20f9c-5c84-4c50-8a18-acf0452db62f # Guestbook
+              - cdad2202-5d55-49ba-995e-962503f5887f # Home
+        elementType: craft\elements\Entry
+        fieldContext: global
+      defaultSort:
+        - title
+        - asc
+      key: 'custom:bef75f27-face-4b86-af9e-61d96538bfed'
+      label: 'Default pages'
+      tableAttributes: '-'
+      type: custom
+    -
+      defaultSort:
+        - structure
+        - asc
+      disabled: false
+      key: 'section:c4b4f50d-7d62-4a4c-bbf8-7aae00fd82c7' # Pages
+      tableAttributes:
+        - status
+        - postDate
+        - expiryDate
+        - link
+      type: native
+    -
+      heading: Channels
+      type: heading
+    -
+      defaultSort:
+        - postDate
+        - desc
+      disabled: false
+      key: 'section:6ba54824-1c3f-454f-8830-f6cea379bee4' # Blog Posts
+      tableAttributes:
+        - status
+        - postDate
+        - expiryDate
+        - link
+      type: native
+    -
+      key: 'section:70b2614b-639a-4de2-8c11-3851d36d6f8c' # Blog Categories
+      type: native
+    -
+      defaultSort:
+        - postDate
+        - desc
+      disabled: false
+      key: 'section:3e2a1a6f-88ea-477b-936d-39393f2d594f' # Guestbook Posts
+      tableAttributes:
+        - status
+        - postDate
+        - expiryDate
+        - link
+      type: native
+    -
+      heading: Everything
+      type: heading
+    -
+      defaultSort:
+        - title
+        - asc
+      disabled: true
+      key: singles
+      tableAttributes:
+        - status
+        - link
+      type: native
+    -
+      defaultSort:
+        - postDate
+        - desc
+      disabled: false
+      key: '*'
+      tableAttributes:
+        - status
+        - section
+        - postDate
+        - expiryDate
+        - link
+      type: native
+    -
+      heading: ''
+      type: heading
+email:
+  fromEmail: travis@pixelandtonic.com
+  fromName: 'Starter starter'
+  transportType: craft\mail\transportadapters\Sendmail
+fs:
+  cloud:
+    hasUrls: true
+    name: Cloud
+    settings:
+      expires: '1 years'
+      hasUrls: true
+      localFsPath: '@webroot/uploads'
+      localFsUrl: '@web/uploads'
+      subpath: null
+    type: craft\cloud\fs\AssetsFs
+meta:
+  __names__:
+    0a58e287-e038-4eb7-ab2a-cf4cbdbe013d: 'Page content' # Page content
+    2b829e15-a7bd-4ab0-9050-dcdfe44499cf: 'Public Schema' # Public Schema
+    2bae9725-9546-4f55-a889-56102191aa89: Navigation # Navigation
+    3e2a1a6f-88ea-477b-936d-39393f2d594f: 'Guestbook Posts' # Guestbook Posts
+    5dd08fc8-3ea4-4582-952f-4c0f7ebf409e: Category # Category
+    6ba54824-1c3f-454f-8830-f6cea379bee4: 'Blog Posts' # Blog Posts
+    6c819fc7-3f73-4873-8f0c-5ea322fef1f9: 'Divider type' # Divider type
+    6c9778b8-507c-4108-937d-6ceeabf35047: Image # Image
+    6d0d3aa4-84be-441d-8fcc-2ab2d6db2503: Starters # Starters
+    6d2e5577-5ded-43c9-96e2-d4fc4c770fe9: Text # Text
+    7b9364bd-2215-495a-8b0b-2280df887a8b: Media # Media
+    7dac7ab3-08a0-4af8-ba7c-cbecd0726f08: Simple # Simple
+    9d082133-4710-4468-ab39-80db8c9fcf59: Code # Code
+    9d42aa56-4a66-4d0b-b8a9-84a4cb387788: 'Text block' # Text block
+    25b2446d-c1d2-4aa1-8184-3147e617f069: Text # Text
+    58ccb571-6c72-449f-8e7b-6f43c5d416b3: 'Next Starter' # Next Starter
+    70b2614b-639a-4de2-8c11-3851d36d6f8c: 'Blog Categories' # Blog Categories
+    163c895f-0c05-4845-80e2-043b2346d830: Address # Address
+    0413e9dc-1c8a-4221-b81d-c9f6c0594cbd: Hero # Hero
+    697da4c2-e02f-4f49-9d76-e22609ceda25: Page # Page
+    998bf681-e007-4f7e-a525-863e01a38560: Blog # Blog
+    5358db38-27c0-49b4-b9d3-e68326e79da2: Image # Image
+    0922209d-2911-419e-82cf-b05113a35f6e: Wide # Wide
+    a06e695e-af7f-4a1b-84a7-575ec935e293: Video # Video
+    aef20f9c-5c84-4c50-8a18-acf0452db62f: Guestbook # Guestbook
+    b5b7bfc5-a39e-4d1a-89be-51f0afeb5ce0: Avatar # Avatar
+    b579b454-12bd-4710-a436-c26907141957: Full # Full
+    bd99645a-4524-40e4-83dc-c6b12e023bab: Global # Global
+    c4b4f50d-7d62-4a4c-bbf8-7aae00fd82c7: Pages # Pages
+    c7d2eb61-cdde-4a76-88a9-eb30ddcf155b: Guestbook # Guestbook
+    cdad2202-5d55-49ba-995e-962503f5887f: Home # Home
+    d4f0917b-edcf-4ef0-a98b-661ff27384ad: Page # Page
+    d55d172f-8b8f-4bb7-b680-31249981c350: Global # Global
+    d390347a-09cf-4b70-a3b4-bc3cca520623: Category # Category
+    f7576aa3-c155-4b54-82c9-8cb8c93495c9: Callout # Callout
+plugins:
+  ckeditor:
+    edition: standard
+    enabled: true
+    schemaVersion: 3.0.0.0
+system:
+  edition: solo
+  live: true
+  name: 'Next Starter'
+  retryDuration: null
+  schemaVersion: 5.5.0.0
+  timeZone: America/Los_Angeles

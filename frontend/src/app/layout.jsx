@@ -1,17 +1,20 @@
 import './globals.css'
-import Header from '../components/Header'
+import { GLOBALS_QUERY } from '../queries/globals'
+import { fetchGraphQL } from '../lib/graphql'
 import Footer from '../components/Footer'
+import Header from '../components/Header'
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const data = await fetchGraphQL(GLOBALS_QUERY)
+  const globalData = data?.globalEntries?.[0] || {}
+  const pagesData = data?.pagesEntries || []
+
   return (
     <html lang="en">
       <body>
-        <Header />
-        
-        <main className="page min-h-screen" id="main" tabIndex="-1">
-          {children}
-        </main>
-        <Footer />
+        <Header globalData={globalData} />
+        <main>{children}</main>
+        <Footer address={globalData.address} />
       </body>
     </html>
   )

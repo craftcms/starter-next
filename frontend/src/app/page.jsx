@@ -1,5 +1,5 @@
 import { HOME_QUERY } from '../queries/home'
-import { fetchGraphQL } from './lib/graphql'
+import { fetchGraphQL } from '../lib/graphql'
 
 export default async function Home() {
   const data = await fetchGraphQL(HOME_QUERY)

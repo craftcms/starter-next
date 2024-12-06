@@ -6,11 +6,11 @@ export function usePreview() {
   const searchParams = useSearchParams()
   
   const isPreview = () => {
-    return !!searchParams.get('x-craft-live-preview')
+    return Boolean(searchParams?.get('x-craft-live-preview'))
   }
 
   const getPreviewToken = () => {
-    return searchParams.get('token') || null
+    return searchParams?.get('token') || null
   }
 
   const getPreviewTimestamp = () => {
@@ -18,7 +18,6 @@ export function usePreview() {
   }
 
   const refreshPreview = () => {
-    // Force a client-side refresh
     window.location.reload()
   }
 

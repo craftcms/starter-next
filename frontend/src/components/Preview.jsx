@@ -3,20 +3,19 @@
 import { useEffect, useState } from 'react'
 import { usePreview } from '../lib/preview'
 import { fetchGraphQL } from '../lib/graphql'
-import { HOME_QUERY } from '../queries/home'
-import { HomeContent } from './HomeContent'
+import { Content } from './Content'
 
-export function PreviewHome({ initialData }) {
+export function Preview({ initialData, query, transform, variables = {} }) {
   const { previewToken, previewTimestamp } = usePreview()
   const [data, setData] = useState(initialData)
 
   useEffect(() => {
     if (previewToken) {
-      fetchGraphQL(HOME_QUERY, {}, previewToken)
+      fetchGraphQL(query, variables, previewToken)
         .then(newData => setData(newData))
     }
-  }, [previewToken, previewTimestamp])
+  }, [previewToken, previewTimestamp, query, variables])
 
-  const pageData = data?.entries?.[0] || {}
-  return <HomeContent pageData={pageData} />
+  const pageData = transform ? transform(data) : data?.entries?.[0] || {}
+  return <Content pageData={pageData} />
 } 

@@ -5,7 +5,7 @@ import { usePreview } from '../lib/preview'
 import { fetchGraphQL } from '../lib/graphql'
 import { Content } from './Content'
 
-export function Preview({ initialData, query, transform, variables = {} }) {
+export function Preview({ initialData, query, variables = {} }) {
   const { previewToken, previewTimestamp } = usePreview()
   const [data, setData] = useState(initialData)
 
@@ -16,6 +16,6 @@ export function Preview({ initialData, query, transform, variables = {} }) {
     }
   }, [previewToken, previewTimestamp, query, variables])
 
-  const pageData = transform ? transform(data) : data?.entries?.[0] || {}
+  const pageData = data?.blogPostsEntries?.[0] || data?.entry || data?.entries?.[0] || {}
   return <Content pageData={pageData} />
 } 

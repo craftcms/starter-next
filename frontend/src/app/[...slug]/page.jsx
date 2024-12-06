@@ -9,7 +9,6 @@ const transform = (data) => {
   
   return {
     ...data.entry,
-    // Ensure all required fields are present
     title: data.entry.title || '',
     pageSubheading: data.entry.pageSubheading || '',
     pageContent: data.entry.pageContent || '',

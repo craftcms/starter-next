@@ -4,7 +4,9 @@ import { fetchGraphQL } from './graphql'
 
 export function createPage(query, transform) {
   return async function Page({ params, searchParams }) {
-    const uri = params?.slug ? params.slug.join('/') : ''
+    const uri = Array.isArray(params?.slug) 
+      ? params.slug.join('/') 
+      : params?.slug || ''
     
     const data = await fetchGraphQL(query, { uri })
     
@@ -13,18 +15,18 @@ export function createPage(query, transform) {
       searchParams['token']
     )
 
+    const transformedData = transform ? transform(data) : data?.entries?.[0] || {}
+
     if (isPreview) {
       return (
         <Preview 
           initialData={data} 
           query={query}
-          transform={transform}
           variables={{ uri }}
         />
       )
     }
 
-    const pageData = transform ? transform(data) : data?.entries?.[0] || {}
-    return <Content pageData={pageData} />
+    return <Content pageData={transformedData} />
   }
 } 

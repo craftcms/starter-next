@@ -8,13 +8,14 @@ export function createPage(query, transform, CustomContent) {
       ? params.slug.join('/') 
       : params?.slug || ''
     
-    const page = Number(searchParams.page) || 1
-    const perPage = Number(searchParams.perPage) || 10
-    
+    const currentPage = parseInt(searchParams?.page) || 1
+    const perPage = 4
+    const offset = (currentPage - 1) * perPage
+
     const data = await fetchGraphQL(query, { 
       uri,
       limit: perPage,
-      offset: (page - 1) * perPage
+      offset: offset
     })
     
     const isPreview = Boolean(
@@ -29,12 +30,20 @@ export function createPage(query, transform, CustomContent) {
         <Preview 
           initialData={data} 
           query={query}
-          variables={{ uri, limit: perPage, offset: (page - 1) * perPage }}
+          variables={{ 
+            uri,
+            limit: perPage,
+            offset: offset
+          }}
         />
       )
     }
 
     const ContentComponent = CustomContent || Content
-    return <ContentComponent pageData={transformedData} />
+    return <ContentComponent 
+      pageData={transformedData} 
+      initialData={data} 
+      searchParams={searchParams}
+    />
   }
 } 

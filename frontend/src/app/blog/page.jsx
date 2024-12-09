@@ -1,7 +1,11 @@
 import { createPage } from '../../lib/createPage'
 import { BLOG_QUERY } from '../../queries/blog'
+import { Content } from '../../components/Content'
 import { Teaser } from '../../components/Teaser'
 import { Pagination } from '../../components/Pagination'
+
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 const transform = (data) => {
   if (!data?.blogEntries?.[0]) {
@@ -9,66 +13,62 @@ const transform = (data) => {
   }
   
   return {
-    // Main content from blogEntries
     ...data.blogEntries[0],
     title: data.blogEntries[0].title || '',
     pageSubheading: data.blogEntries[0].pageSubheading || '',
     pageContent: data.blogEntries[0].pageContent || '',
-    // Blog posts list
     posts: data.blogPostsEntries || [],
-    // Pagination data
     totalEntries: data.entryCount || 0
   }
 }
 
-// Custom Content component for blog listing
-function BlogContent({ pageData }) {
-  const {
-    title,
-    pageSubheading,
-    pageContent,
-    posts,
-    totalEntries
-  } = pageData
+function BlogPage({ pageData, initialData, searchParams }) {
+  const currentPage = parseInt(searchParams?.page) || 1
+  const perPage = 4
+  const offset = (currentPage - 1) * perPage
+  const totalPages = Math.ceil(pageData.totalEntries / perPage)
+
+  console.log('Blog Page:', { 
+    currentPage, 
+    totalPages, 
+    totalEntries: pageData.totalEntries,
+    postsCount: pageData.posts.length,
+    offset,
+    perPage
+  })
 
   return (
-    <div>
-      <header className="container mx-auto pt-12 pb-6 px-2 text-2xl">
-        <h1 className="font-bold text-4xl sm:text-6xl lg:text-9xl">
-          {title}
-        </h1>
-        {pageSubheading && (
-          <p className="mt-4">{pageSubheading}</p>
-        )}
-      </header>
-
-      <section className="page__content">
-        <div 
-          className="container mx-auto py-12 px-2 text-balance"
-          dangerouslySetInnerHTML={{ __html: pageContent }}
-        />
-      </section>
-
+    <>
+      <Content pageData={pageData} />
+      
       <section className="container mx-auto mb-6 px-2 divide-y divide-slate-300">
-       {/* {posts.length > 0 ? (
-          <div className="sm:grid sm:grid-cols-2 sm:gap-6">
-            {posts.map(entry => (
-              <Teaser 
-                key={entry.id}
-                entry={entry}
-                featured={true}
+        {pageData.posts.length > 0 ? (
+          <>
+            <div className="sm:grid sm:grid-cols-2 sm:gap-6">
+              {pageData.posts.map(entry => (
+                <Teaser 
+                  key={entry.id}
+                  entry={entry}
+                  featured={true}
+                />
+              ))}
+            </div>
+
+            {totalPages > 1 && (
+              <Pagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
               />
-            ))}
-          </div>
+            )}
+          </>
         ) : (
           <p>No posts yet.</p>
         )}
-        
-         Add Pagination here */}
       </section>
-    </div>
+    </>
   )
 }
 
-// Export the page with custom content component
-export default createPage(BLOG_QUERY, transform, BlogContent)
+export default function Page(props) {
+  return createPage(BLOG_QUERY, transform, BlogPage)(props)
+}

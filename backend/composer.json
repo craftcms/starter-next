@@ -23,7 +23,7 @@
   "require": {
     "craftcms/ckeditor": "4.4.0",
     "craftcms/cloud": "*",
-    "craftcms/cms": "5.5.2",
+    "craftcms/cms": "5.5.5",
     "vlucas/phpdotenv": "^5.4.0"
   },
   "require-dev": {

@@ -1,51 +1,39 @@
-export async function fetchGraphQL(query, variables = {}, preview = null) {
-  const craftUrl = process.env.CRAFT_URL
+export async function fetchGraphQL(query, variables = {}, options = {}) {
+  const apiUrl = process.env.NEXT_PUBLIC_CRAFT_API_URL
   
-  if (!craftUrl) {
-    throw new Error('CRAFT_URL is not defined in environment variables')
-  }
-
-  // Construct the GraphQL endpoint
-  const endpoint = `${craftUrl}/api`
-
-  // Modify endpoint if in preview mode
-  const url = preview 
-    ? `${endpoint}?x-craft-live-preview=${preview}`
-    : endpoint
-
   const headers = {
     'Content-Type': 'application/json',
+    'Accept': 'application/json',
   }
 
-  // Add preview token if in preview mode
-  if (preview) {
-    headers['x-craft-token'] = preview
-  }
-
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ query, variables }),
-      next: { revalidate: 60 }, // Optional: Add cache revalidation
-    })
-
-    const json = await res.json()
-
-    // GraphQL can return errors with a 200 status
-    if (json.errors) {
-      console.error('GraphQL Errors:', json.errors)
-      throw new Error(json.errors[0].message)
+  if (options.private) {
+    const token = process.env.NEXT_PUBLIC_CRAFT_API_TOKEN
+    if (!token) {
+      throw new Error('No API token found for private query')
     }
-
-    if (!res.ok) {
-      console.error('Network Error:', res.status, res.statusText)
-      throw new Error(`Network error: ${res.status} ${res.statusText}`)
-    }
-
-    return json.data
-  } catch (error) {
-    console.error('Fetch error:', error)
-    throw error
+    headers['Authorization'] = `Bearer ${token}`
   }
+
+  const response = await fetch(apiUrl, {
+    method: 'POST',
+    headers,
+    credentials: 'include',
+    body: JSON.stringify({ query, variables }),
+  })
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+
+  const json = await response.json()
+
+  if (json.errors) {
+    throw new Error(json.errors[0].message)
+  }
+
+  if (!json.data) {
+    throw new Error('No data returned from GraphQL')
+  }
+
+  return json.data
 }

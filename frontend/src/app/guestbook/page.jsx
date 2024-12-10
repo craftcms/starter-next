@@ -1,7 +1,7 @@
 import { createPage } from '../../lib/createPage'
 import { GUESTBOOK_QUERY } from '../../queries/guestbook'
 import { Content } from '../../components/Content'
-import { GuestbookForm } from '../../components/GuestbookForm'
+import { GuestbookInteractive } from '../../components/GuestbookInteractive'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -11,23 +11,21 @@ const transform = (data) => {
     throw new Error('Guestbook page not found')
   }
   
+  const entry = data.guestbookEntries[0]
   return {
-    ...data.guestbookEntries[0],
-    title: data.guestbookEntries[0].title || '',
-    pageSubheading: data.guestbookEntries[0].pageSubheading || '',
-    pageContent: data.guestbookEntries[0].pageContent || '',
-    authorId: data.guestbookEntries[0].authorId
+    ...entry,
+    title: entry.title || '',
+    pageSubheading: entry.pageSubheading || '',
+    pageContent: entry.pageContent || '',
+    authorId: entry.authorId
   }
 }
 
-function GuestbookPage({ pageData, initialData, searchParams }) {
+function GuestbookPage({ pageData }) {
   return (
     <>
       <Content pageData={pageData} />
-      <GuestbookForm 
-        authorId={pageData.authorId}
-        previewToken={searchParams?.token}
-      />
+      <GuestbookInteractive authorId={pageData.authorId} />
     </>
   )
 }

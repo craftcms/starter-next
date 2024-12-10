@@ -1,16 +1,20 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { fetchGraphQL } from '../lib/graphql'
-import { Pagination } from './Pagination'
 import { GUESTBOOK_POSTS_QUERY } from '../queries/guestbookPosts'
+import { Pagination } from './Pagination'
+import { useSearchParams, useRouter } from 'next/navigation'
 
-export function PostList({ previewToken, onRefresh }) {
+export const PostList = forwardRef(function PostList({ onRefresh }, ref) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [data, setData] = useState(null)
-  const [currentPage, setCurrentPage] = useState(1)
-  const perPage = 10
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  
+  const currentPage = parseInt(searchParams.get('page')) || 1
+  const perPage = 4
 
   const loadPosts = async (page = currentPage) => {
     setLoading(true)
@@ -20,38 +24,53 @@ export function PostList({ previewToken, onRefresh }) {
         {
           limit: perPage,
           offset: (page - 1) * perPage
-        },
-        { previewToken }
+        }
       )
       
+      if (!result) {
+        throw new Error('No data returned from GraphQL')
+      }
+
       setData({
         posts: result?.guestbookPostsEntries || [],
         total: result?.entryCount || 0
       })
+      
+      if (onRefresh) {
+        onRefresh()
+      }
     } catch (err) {
       console.error('GraphQL Error:', err)
-      setError(err)
+      setError(err instanceof Error ? err : new Error('Failed to load posts'))
     } finally {
       setLoading(false)
     }
   }
 
-  // Load posts when page changes
-  useEffect(() => {
-    loadPosts()
-  }, [currentPage])
-
-  // Allow parent to trigger refresh
-  useEffect(() => {
-    if (onRefresh) {
-      onRefresh(loadPosts)
+  // Expose refresh method to parent
+  useImperativeHandle(ref, () => ({
+    refresh: () => {
+      router.push('/guestbook?page=1')
+      loadPosts(1)
     }
-  }, [onRefresh])
+  }))
+
+  useEffect(() => {
+    loadPosts(currentPage)
+  }, [currentPage])
 
   const totalPages = Math.ceil((data?.total || 0) / perPage)
 
+  const handlePageChange = (newPage) => {
+    router.push(`/guestbook?page=${newPage}`)
+  }
+
   if (loading) return <div className="py-4">Loading...</div>
-  if (error) return <div className="py-4 text-red-600">{error.message}</div>
+  if (error) return (
+    <div className="py-4 text-red-600">
+      Error loading posts: {error.message}
+    </div>
+  )
 
   return (
     <div>
@@ -73,6 +92,7 @@ export function PostList({ previewToken, onRefresh }) {
             <Pagination 
               currentPage={currentPage}
               totalPages={totalPages}
+              onPageChange={handlePageChange}
             />
           )}
         </>
@@ -81,4 +101,4 @@ export function PostList({ previewToken, onRefresh }) {
       )}
     </div>
   )
-}
+})

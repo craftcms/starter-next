@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { fetchGraphQL } from '../lib/graphql'
-import { CREATE_POST_MUTATION } from '../queries/post'
+import { fetchGraphQL } from '@/lib/graphql'
+import { CREATE_POST_MUTATION } from '@/queries/post.mjs'
 
 export function PostForm({ authorId, onPostSubmitted }) {
   const [message, setMessage] = useState('')
@@ -13,52 +13,43 @@ export function PostForm({ authorId, onPostSubmitted }) {
     return `Post: ${words}${words ? '...' : ''}`
   }
 
-  const submitPost = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     
-    if (!message.trim()) {
-      console.error('Message is required')
-      return
-    }
+    if (!message.trim()) return
 
     setLoading(true)
     try {
-      const title = generateTitle(message)
-      console.log('Submitting with:', {
-        title,
-        message,
-        authorId
-      })
-
-      const result = await fetchGraphQL(
+      const response = await fetchGraphQL(
         CREATE_POST_MUTATION, 
         {
-          title,
-          message,
+          title: generateTitle(message),
+          message: message,
           authorId: authorId.toString()
         },
         { private: true }
       )
 
-      console.log('Mutation result:', result)
-
-      if (!result?.save_guestbookPosts_text_Entry) {
-        throw new Error('No data returned from the mutation')
+      if (!response?.save_guestbookPosts_text_Entry) {
+        throw new Error('Failed to create post')
       }
 
-      // TODO: Add flash message functionality
       setMessage('')
-      if (onPostSubmitted) onPostSubmitted()
-    } catch (err) {
-      // TODO: Add flash message functionality
-      console.error('Error creating post:', err)
+      
+      // Call the callback instead of refreshing the page
+      if (onPostSubmitted) {
+        onPostSubmitted()
+      }
+      
+    } catch (error) {
+      alert(error.message || 'Failed to create post')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <form method="post" onSubmit={submitPost}>
+    <form method="post" onSubmit={handleSubmit}>
       <div className="mb-6 mt-4">
         <label htmlFor="message" className="font-bold">Message</label>
         <textarea 
@@ -68,7 +59,7 @@ export function PostForm({ authorId, onPostSubmitted }) {
           id="message" 
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-        />
+        ></textarea>
       </div>
       <input 
         type="submit" 

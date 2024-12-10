@@ -8,7 +8,9 @@ export function createPage(query, transform, CustomContent) {
       ? params.slug.join('/') 
       : params?.slug || ''
     
-    const currentPage = parseInt(searchParams?.page) || 1
+    const resolvedParams = await searchParams
+    
+    const currentPage = parseInt(String(resolvedParams?.page || '1'))
     const perPage = 4
     const offset = (currentPage - 1) * perPage
 
@@ -19,8 +21,8 @@ export function createPage(query, transform, CustomContent) {
     })
     
     const isPreview = Boolean(
-      searchParams['x-craft-live-preview'] && 
-      searchParams['token']
+      resolvedParams?.token && 
+      resolvedParams?.['x-craft-live-preview']
     )
 
     const transformedData = transform ? transform(data) : data?.entries?.[0] || {}
@@ -43,7 +45,7 @@ export function createPage(query, transform, CustomContent) {
     return <ContentComponent 
       pageData={transformedData} 
       initialData={data} 
-      searchParams={searchParams}
+      searchParams={resolvedParams}
     />
   }
 } 

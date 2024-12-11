@@ -3,10 +3,12 @@
 import { useState } from 'react'
 import { fetchGraphQL } from '@/lib/graphql'
 import { CREATE_POST_MUTATION } from '@/queries/post.mjs'
+import { useFlashes } from '@/lib/flashes'
 
 export function PostForm({ authorId, onPostSubmitted }) {
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
+  const { addFlash } = useFlashes()
 
   const generateTitle = (text) => {
     const words = text.split(' ').slice(0, 3).join(' ').trim()
@@ -35,14 +37,14 @@ export function PostForm({ authorId, onPostSubmitted }) {
       }
 
       setMessage('')
+      addFlash('Your message has been posted successfully!', 'success')
       
-      // Call the callback instead of refreshing the page
       if (onPostSubmitted) {
         onPostSubmitted()
       }
       
     } catch (error) {
-      alert(error.message || 'Failed to create post')
+      addFlash(error.message || 'Failed to create post', 'error')
     } finally {
       setLoading(false)
     }

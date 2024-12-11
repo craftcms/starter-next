@@ -2,6 +2,8 @@ import { createPage } from '../../lib/createPage'
 import { GUESTBOOK_QUERY } from '../../queries/guestbook'
 import { Content } from '../../components/Content'
 import { GuestbookInteractive } from '../../components/GuestbookInteractive'
+import { FlashProvider } from '@/lib/flashes'
+import { Alert } from '@/components/Alert'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -23,10 +25,11 @@ const transform = (data) => {
 
 function GuestbookPage({ pageData }) {
   return (
-    <>
+    <FlashProvider>
+      <Alert />
       <Content pageData={pageData} />
       <GuestbookInteractive authorId={pageData.authorId} />
-    </>
+    </FlashProvider>
   )
 }
 

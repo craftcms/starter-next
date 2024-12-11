@@ -1,5 +1,7 @@
 import { GLOBALS_QUERY } from '../queries/globals'
 import { fetchGraphQL } from '../lib/graphql'
+import { FlashProvider } from '../lib/flashes'
+import { Alert } from '../components/Alert'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import "./globals.css"
@@ -18,7 +20,10 @@ export default async function RootLayout({ children }) {
           logo={globalsData.logo} 
           pages={pages}
         />
-        {children}
+        <FlashProvider>
+          <Alert />
+          {children}
+        </FlashProvider>
         <Footer address={globalsData.address} />
       </body>
     </html>

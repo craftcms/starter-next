@@ -6,34 +6,36 @@ export async function fetchGraphQL(query, variables = {}, options = {}) {
     'Accept': 'application/json',
   }
 
+  // Add auth header if private flag is true
   if (options.private) {
     const token = process.env.NEXT_PUBLIC_CRAFT_API_TOKEN
-    if (!token) {
-      throw new Error('No API token found for private query')
-    }
     headers['Authorization'] = `Bearer ${token}`
   }
 
   const response = await fetch(apiUrl, {
     method: 'POST',
     headers,
+    body: JSON.stringify({
+      query,
+      variables
+    }),
     credentials: 'include',
-    body: JSON.stringify({ query, variables }),
   })
 
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
+    const errorText = await response.text()
+    throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`)
   }
 
-  const json = await response.json()
+  const result = await response.json()
 
-  if (json.errors) {
-    throw new Error(json.errors[0].message)
+  if (result.errors) {
+    throw new Error(result.errors[0].message)
   }
 
-  if (!json.data) {
+  if (!result.data) {
     throw new Error('No data returned from GraphQL')
   }
 
-  return json.data
+  return result.data
 }

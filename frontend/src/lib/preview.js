@@ -4,27 +4,21 @@ import { useSearchParams } from 'next/navigation'
 
 export function usePreview() {
   const searchParams = useSearchParams()
+  const previewToken = ref(searchParams?.get('token') || null)
+  const previewTimestamp = ref(Date.now())
   
   const isPreview = () => {
     return Boolean(searchParams?.get('x-craft-live-preview'))
   }
 
-  const getPreviewToken = () => {
-    return searchParams?.get('token') || null
-  }
-
-  const getPreviewTimestamp = () => {
-    return Date.now()
-  }
-
   const refreshPreview = () => {
-    window.location.reload()
+    previewTimestamp.value = Date.now()
   }
 
   return {
     isPreview,
-    previewToken: getPreviewToken(),
-    previewTimestamp: getPreviewTimestamp(),
+    previewToken,
+    previewTimestamp,
     refreshPreview
   }
 }

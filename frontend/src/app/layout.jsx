@@ -8,7 +8,10 @@ import "./globals.css"
 
 export default async function RootLayout({ children }) {
   const data = await fetchGraphQL(GLOBALS_QUERY)
-  const globalsData = data?.globalEntries?.[0] || {}
+  
+  console.log('Globals Data:', data?.globalEntries?.[0])
+  
+  const globals = data?.globalEntries?.[0] || {}
   const pages = data?.pagesEntries || []
   const siteName = process.env.SITE_NAME || 'Next Starter'
 
@@ -17,14 +20,14 @@ export default async function RootLayout({ children }) {
       <body>
         <Header 
           siteName={siteName} 
-          logo={globalsData.logo} 
+          logo={globals.logo?.[0] || null}
           pages={pages}
         />
         <FlashProvider>
           <Alert />
           {children}
         </FlashProvider>
-        <Footer address={globalsData.address} />
+        <Footer address={globals.address?.[0] || globals.address || null} />
       </body>
     </html>
   )

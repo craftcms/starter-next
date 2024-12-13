@@ -1,0 +1,30 @@
+{% macro pictures(photos, decorative = false) %}
+
+  {% for photo in photos %}
+    {% if photo.extension == 'svg' %}
+      {% set alt = decorative ? null : (photo.alt ?? null) %}
+      {% set role = decorative ? null : 'img' %}
+      {{ svg(photo)|attr({ role: role, 'aria-label': alt }) }}
+    {% else %}
+      {% set outputWidths = [640, 1024, 1920] %}
+      {% set srcset = [] %}
+      {% for outputWidth in outputWidths %}
+        {% if outputWidth <= photo.width %}
+          {% set srcset = srcset | merge([photo.url({ width: outputWidth }) ~ ' ' ~ outputWidth ~ 'w']) %}
+        {% endif %}
+      {% endfor %}
+      <picture>
+        <source 
+          data-sizes="100vw"
+          type="image/webp" />
+        <img class="lazyload"
+          src="{{ photo.url }}"
+          srcset="{{ srcset | join(', ') }}"
+          {% if decorative %}alt=""{% elseif photo.alt %}alt="{{ photo.alt }}"{% endif %}
+          sizes="100vw"
+          loading="lazy"
+          class="aspect-ratio-wide" />
+      </picture>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}

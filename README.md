@@ -49,14 +49,14 @@ This project assumes you have our recommended development environment  [DDEV](ht
     ddev fe npm install
     ```
 
-1. Start the Nuxt development server:
+1. Start the Next development server:
 
     ```bash
     ddev fe npm run dev
     ```
 
 > [!TIP]
-> The URLs that Nuxt emits as it boots up may not work—they are correct _inside_ their respective containers, but must be accessed from the outside via the pre-configured DDEV hostnames.
+> The URLs that Next.js emits as it boots up may not work—they are correct _inside_ their respective containers, but must be accessed from the outside via the pre-configured DDEV hostnames.
 
 ### Post-Install
 
@@ -84,7 +84,7 @@ The blog is neatly paginated in a way that matches Craft’s native handling. Pr
 
 ## Project Structure
 
-We’ve split the project directory into two folders, `backend/` and `frontend/`, to better demonstrate the boundaries of Craft and Next, respectively. Some configuration needs to be transcribed between the spaces to ensure each half understands where the other lives!
+We’ve split the project directory into two folders, `backend/` and `frontend/`, to better demonstrate the boundaries of Craft and Next.js, respectively. Some configuration needs to be transcribed between the spaces to ensure each half understands where the other lives!
 
 > [!WARNING]
 > The front- and back-end `.env` files are separate! Make sure you are updating configuration in the correct file.
@@ -99,14 +99,14 @@ Craft uses the `PRIMARY_SITE_URL` environment variable to generate fully-qualifi
 
 ### Front End
 
-Nuxt lives in the `frontend/` directory. All NPM commands should be executed here—as a convenience, we’ve included a custom DDEV command (`.ddev/commands/web/fe`) that ensures tasks are run in the appropriate directory:
+Next.js lives in the `frontend/` directory. All NPM commands should be executed here—as a convenience, we’ve included a custom DDEV command (`.ddev/commands/web/fe`) that ensures tasks are run in the appropriate directory:
 
 - `ddev fe npm install` &rarr; Moves into `frontend/`, then executes `npm install`;
 - `ddev fe npm run dev` &rarr; Moves into `frontend/`, then executes the `dev` script;
 
-See `frontend/nuxt.config.js` to [customize Next](https://nextjs.org/docs/app/getting-started/installation), or read about the rest of its [project structure](https://nextjs.org/docs/app/getting-started/project-structure).
+See `frontend/next.config.js` to [customize Next.js](https://nextjs.org/docs/app/api-reference/next-config-js), or read about the rest of its [project structure](https://nextjs.org/docs/getting-started/project-structure).
 
-Routing is handled primarily via the [`pages/`](https://nextjs.org/docs/app/building-your-application/routing/pages) directory, and GraphQL queries are centralized in `queries/`.
+Routing is handled primarily via the [`app/`](https://nextjs.org/docs/app/building-your-application/routing) directory, and GraphQL queries are centralized in `queries/`.
 
 ## Tips + Tricks
 
@@ -132,7 +132,7 @@ Then, a change is required for each of the nginx configuration files:
 - Change the `server_name` directive in `.ddev/nginx_full/api-site.conf` to match the back-end url;
 - Change the `server_name` directive in `.ddev/nginx_full/next-site.conf` to match the front-end url;
 
-Nuxt also needs to be told what front-end URLs should look like:
+Next.js also needs to be told what front-end URLs should look like:
 
 - Update `BASE_URL` in `frontend/.env`;
 
@@ -140,7 +140,7 @@ Finally, Craft may need to generate absolute URLs to the control panel in some s
 
 - Update `CRAFT_BASE_CP_URL` in `backend/.env`;
 
-Your production configuration will probably look different—as long as Nuxt knows where the GraphQL endpoint lives (`CRAFT_URL` in `frontend/.env`) and both Craft and Nuxt know how to generate public URLs (`PRIMARY_SITE_URL` in `backend/.env` and `BASE_URL` in `frontend/.env`, respectively) these URLs don’t need to be related in any specific way!
+Your production configuration will probably look different—as long as Next.js knows where the GraphQL endpoint lives (`CRAFT_URL` in `frontend/.env`) and both Craft and Next.js know how to generate public URLs (`PRIMARY_SITE_URL` in `backend/.env` and `BASE_URL` in `frontend/.env`, respectively) these URLs don’t need to be related in any specific way!
 
 > [!TIP]
 > Always validate your CORS policy when deploying projects that make cross-domain requests!

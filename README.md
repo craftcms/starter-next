@@ -7,7 +7,7 @@ A minimal, production-ready starter for [Next.js 15](https://nextjs.org) and [Cr
 
 ## Quick Start
 
-This project assumes you have our recommended development environment  [DDEV](https://ddev.com) installed and up-to-date.
+This project assumes you have our recommended development environment [DDEV](https://ddev.com) installed and up-to-date.
 
 1. Clone this repository, and move into the new directory:
     ```bash

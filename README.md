@@ -72,7 +72,7 @@ This project includes basic support for a handful of Craft’s best features, in
 
 ### GraphQL
 
-Nuxt communicates with Craft’s built-in [GraphQL API](https://craftcms.com/docs/5.x/development/graphql.html) to query posts and pages, and create (or “mutate”) guestbook entries.
+Next communicates with Craft’s built-in [GraphQL API](https://craftcms.com/docs/5.x/development/graphql.html) to query posts and pages, and create (or “mutate”) guestbook entries.
 
 ### Live Preview
 
@@ -116,7 +116,7 @@ If you want to compress the GraphQL query feedback loop, open up the Craft contr
 
 ### Running on a Different Domain
 
-The DDEV configuration files shipped with this project use a specific pair of URLs for the Nuxt front end and Craft back end:
+The DDEV configuration files shipped with this project use a specific pair of URLs for the Next front end and Craft back end:
 
 - **Front end**: `https://starter-next.ddev.site`
 - **Back end**: `https://api.starter-next.ddev.com`

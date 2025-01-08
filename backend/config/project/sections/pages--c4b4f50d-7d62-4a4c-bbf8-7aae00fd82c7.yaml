@@ -23,7 +23,7 @@ siteSettings:
     enabledByDefault: true
     hasUrls: true
     template: null
-    uriFormat: '{slug}'
+    uriFormat: '{{ parent ? parent.uri : null }}/{slug}'
 structure:
   maxLevels: null
   uid: 97fc32ea-6e86-45dd-b3dd-97cdc4360518

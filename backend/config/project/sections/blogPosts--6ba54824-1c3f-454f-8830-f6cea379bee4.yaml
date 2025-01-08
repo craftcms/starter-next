@@ -10,10 +10,10 @@ previewTargets:
     __assoc__:
       -
         - label
-        - 'Primary entry page'
+        - 'Blog feed'
       -
         - urlFormat
-        - '{{ alias(''@preview'') }}/{uri}'
+        - '{url}'
       -
         - refresh
         - '1'

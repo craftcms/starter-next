@@ -13,11 +13,13 @@ const DEFAULT_PAGE_SIZE = 4
 export function createPage(query, transform, CustomContent) {
   return async function Page({ params, searchParams }) {
     try {
+      const { slug } = await params;
+
       // Handle URI construction
-      const uri = Array.isArray(params?.slug) 
-        ? params.slug.join('/') 
-        : params?.slug || ''
-      
+      const uri = Array.isArray(slug)
+        ? slug.join('/') 
+        : slug || ''
+
       // Handle pagination
       const resolvedParams = await searchParams
       const currentPage = parseInt(String(resolvedParams?.page || '1'))

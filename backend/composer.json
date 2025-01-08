@@ -32,8 +32,7 @@
   },
   "autoload": {
     "psr-4": {
-      "modules\\": "modules/",
-      "backend\\": "."
+      "modules\\": "modules/"
     }
   },
   "config": {

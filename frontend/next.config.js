@@ -5,11 +5,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: process.env.GQL_HOST,
+        hostname: process.env.CRAFT_URL,
         port: '',
-        pathname: '/**',
-      },
-    ],
+        pathname: '/**'
+      }
+    ]
   },
   env: {
     // We want variables from the `.env` file to be included in the built app:
@@ -17,8 +17,7 @@ const nextConfig = {
     SITE_NAME: process.env.SITE_NAME,
     CRAFT_URL: process.env.CRAFT_URL,
     BASE_URL: process.env.BASE_URL,
-    GRAPHQL_TOKEN: process.env.GRAPHQL_TOKEN,
-    GQL_HOST: process.env.GQL_HOST
+    GRAPHQL_TOKEN: process.env.GRAPHQL_TOKEN
   },
   reactStrictMode: true,
   poweredByHeader: false,

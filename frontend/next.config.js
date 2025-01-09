@@ -5,7 +5,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: process.env.CRAFT_URL,
+        hostname: process.env.GQL_HOST,
         port: '',
         pathname: '/**',
       },
@@ -18,6 +18,7 @@ const nextConfig = {
     CRAFT_URL: process.env.CRAFT_URL,
     BASE_URL: process.env.BASE_URL,
     GRAPHQL_TOKEN: process.env.GRAPHQL_TOKEN,
+    GQL_HOST: process.env.GQL_HOST
   },
   reactStrictMode: true,
   poweredByHeader: false,

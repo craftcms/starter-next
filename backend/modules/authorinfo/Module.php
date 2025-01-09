@@ -10,8 +10,6 @@ use yii\base\Event;
 
 class Module extends \yii\base\Module
 {
-    public static $instance;
-
     /**
      * Cache for the admin user to avoid multiple queries
      */
@@ -20,8 +18,17 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
-        self::$instance = $this;
-        
+
+        // Create an alias to help the autoloader:
+        Craft::setAlias('@modules/authorinfo', __DIR__);
+
+        // Set the controllerNamespace based on whether this is a console or web request:
+        if (Craft::$app->getRequest()->getIsConsoleRequest()) {
+            $this->controllerNamespace = 'modules\\authorinfo\\console\\controllers';
+        } else {
+            $this->controllerNamespace = 'modules\\authorinfo\\controllers';
+        }
+
         Event::on(
             TypeManager::class,
             TypeManager::EVENT_DEFINE_GQL_TYPE_FIELDS,

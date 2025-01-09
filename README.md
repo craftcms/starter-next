@@ -148,6 +148,6 @@ The _path_ Next uses to fetch data via GraphQL must be kept in sync between `bac
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome. Significant structural or aesthetic changes should be submitted as an [issue](https://github.com/craftcms/starter-next/issues).
 
 ## License

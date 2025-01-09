@@ -11,10 +11,14 @@ export function Preview({ initialData, query, variables = {} }) {
 
   useEffect(() => {
     if (previewToken) {
-      fetchGraphQL(query, variables, previewToken)
+      // Re-request the preview data:
+      fetchGraphQL(query, variables, {
+        preview: true,
+        token: previewToken,
+      })
         .then(newData => setData(newData))
     }
-  }, [previewToken, previewTimestamp, query, variables])
+  }, [previewToken, query, variables])
 
   const pageData = data?.blogPostsEntries?.[0] || data?.entry || data?.entries?.[0] || {}
   return <Content pageData={pageData} />

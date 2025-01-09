@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation'
 
 export function usePreview() {
   const searchParams = useSearchParams()
-  
+
   const isPreview = () => {
     return Boolean(searchParams?.get('x-craft-live-preview'))
   }

@@ -27,21 +27,20 @@ This project assumes you have our recommended development environment [DDEV](htt
 
     Write down the username and password you choose, during installation. You’ll need it to [log in to the control panel](#control-panel).
 
-1. Generate a token for the _Posts_ GraphQL Schema:
+1. Generate a token for the _Guestbook_ GraphQL Schema:
 
     ```bash
     # Display a list of schemas and UUIDs:
     ddev craft graphql/list-schemas
 
-    # Use the “Posts” schema ID to generate a token:
+    # Use the “Guestbook” schema ID to generate a token:
     ddev craft graphql/create-token c7d2eb61-cdde-4a76-88a9-eb30ddcf155b
     ```
 
-1. Configure your frontend environment:
+1. Add Next configuration:
 
     - Copy `frontend/.env.example` to `frontend/.env`;
-    - Update to match your Craft installation;
-    - Update `AUTH_HEADER` to the token generated in the previous step;
+    - Set the `GRAPHQL_TOKEN` variable to the token generated in the previous step;
 
 1. Install front-end dependencies:
 
@@ -95,14 +94,14 @@ There is no `.gitignore` at the root of the project—instead, each system maint
 
 The `backend/` directory is predominantly a standard Craft installation, so [its structure](https://craftcms.com/docs/5.x/system/directory-structure.html) should be familiar. Craft is configured to run in [headless mode](https://craftcms.com/docs/5.x/reference/config/general.html#headlessmode), which means it doesn’t perform any element routing, nor template rendering—in fact, it will only respond to _control panel_, _action_, and static asset requests (like any images you might upload).
 
-Craft uses the `PRIMARY_SITE_URL` environment variable to generate fully-qualified URLs for front-end pages (and assets), and `CRAFT_BASE_CP_URL` to build control panel URLs.
+Craft uses the `PRIMARY_SITE_URL` environment variable (automatically set by DDEV) to generate fully-qualified URLs for front-end pages, and the `CRAFT_BASE_CP_URL` (predefined in `backend/.env`) to build control panel and asset URLs.
 
 ### Front End
 
 Next.js lives in the `frontend/` directory. All NPM commands should be executed here—as a convenience, we’ve included a custom DDEV command (`.ddev/commands/web/fe`) that ensures tasks are run in the appropriate directory:
 
 - `ddev fe npm install` &rarr; Moves into `frontend/`, then executes `npm install`;
-- `ddev fe npm run dev` &rarr; Moves into `frontend/`, then executes the `dev` script;
+- `ddev fe npm run dev` &rarr; Moves into `frontend/`, then executes the user-defined `dev` script;
 
 See `frontend/next.config.js` to [customize Next.js](https://nextjs.org/docs/app/api-reference/next-config-js), or read about the rest of its [project structure](https://nextjs.org/docs/getting-started/project-structure).
 
@@ -144,6 +143,8 @@ Your production configuration will probably look different—as long as Next.js 
 
 > [!TIP]
 > Always validate your CORS policy when deploying projects that make cross-domain requests!
+
+The _path_ Next uses to fetch data via GraphQL must be kept in sync between `backend/config/routes.php` and the `apiBasePath` variable in `frontend/src/lib/graphql.js`.
 
 ## Contributing
 

@@ -9,7 +9,7 @@ export default function Logo({ siteName = 'Site Name', logo }) {
           <span className="sr-only">{siteName}</span>
           <Image 
             src={logo.url}
-            alt={logo.alt}
+            alt={siteName}
             width={40}
             height={40}
             className="w-10 h-10"

@@ -28,7 +28,7 @@ This project assumes you have our recommended development environment [DDEV](htt
 
     Write down the username and password you choose, during installation. You’ll need it to [log in to the control panel](#control-panel).
 
-1. Generate a token for the _Guestbook_ GraphQL Schema:
+1. Generate a token for the _Guestbook_ GraphQL schema:
 
     ```bash
     # Display a list of schemas and UUIDs:
@@ -40,20 +40,15 @@ This project assumes you have our recommended development environment [DDEV](htt
 
     (The _Guestbook_ schema is automatically created with the appropriate permissions via [Project Config](https://craftcms.com/docs/5.x/system/project-config.html) as Craft is installed, but _tokens_ are unique to each environment.)
 
-1. Add Next configuration:
+1. Add required Next configuration:
 
     - Copy `frontend/.env.example` to `frontend/.env`;
-    - Set the `GRAPHQL_TOKEN` variable to the token generated in the previous step;
+    - Populate the `GRAPHQL_TOKEN` variable with the token you just generated;
 
-1. Install front-end dependencies:
+1. Install front-end dependencies and start the Next development server:
 
     ```bash
     ddev fe npm install
-    ```
-
-1. Start the Next development server:
-
-    ```bash
     ddev fe npm run dev
     ```
 
@@ -82,7 +77,7 @@ Craft’s live preview works just as you’d expect. You can even copy a secure,
 
 ### Pagination
 
-The blog is neatly paginated in a way that matches Craft’s native handling. Progress through a set of paginated results is reflected in the URL and your browser’s navigation history.
+The blog, category feeds, and the guestbook are neatly paginated in a way that matches Craft’s native handling. Progress through a set of paginated results is reflected in the URL and your browser’s navigation history.
 
 ## Project Structure
 

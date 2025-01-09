@@ -10,6 +10,7 @@ A minimal, production-ready starter for [Next.js 15](https://nextjs.org) and [Cr
 This project assumes you have our recommended development environment [DDEV](https://ddev.com) installed and up-to-date.
 
 1. Clone this repository, and move into the new directory:
+
     ```bash
     git clone https://github.com/craftcms/starter-next.git
     # ...
@@ -18,7 +19,7 @@ This project assumes you have our recommended development environment [DDEV](htt
 
 1. (Optional) Adjust the DDEV project name and domains. See [this section](#running-on-a-different-domain) for more information.
 
-1. Set up your Craft CMS backend:
+1. Set up the Craft CMS backend:
 
     ```bash
     ddev composer install
@@ -36,6 +37,8 @@ This project assumes you have our recommended development environment [DDEV](htt
     # Use the “Guestbook” schema ID to generate a token:
     ddev craft graphql/create-token c7d2eb61-cdde-4a76-88a9-eb30ddcf155b
     ```
+
+    (The _Guestbook_ schema is automatically created with the appropriate permissions via [Project Config](https://craftcms.com/docs/5.x/system/project-config.html) as Craft is installed, but _tokens_ are unique to each environment.)
 
 1. Add Next configuration:
 

@@ -6,11 +6,14 @@ const DEFAULT_OPTIONS = {
 
 export async function fetchGraphQL(query, variables = {}, options = DEFAULT_OPTIONS) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_CRAFT_API_URL
-    
+    const apiBaseUrl = process.env.CRAFT_URL
+    const apiBasePath = 'api';
+
     if (!apiUrl) {
-      throw new Error('NEXT_PUBLIC_CRAFT_API_URL is not configured')
+      throw new Error('CRAFT_URL has not been set for this environment')
     }
+
+    const apiUrl = `${apiBaseUrl}/${apiBasePath}`;
 
     const headers = {
       'Content-Type': 'application/json',
@@ -19,9 +22,9 @@ export async function fetchGraphQL(query, variables = {}, options = DEFAULT_OPTI
 
     // Handle authentication
     if (options.private || options.preview) {
-      const token = options.token || process.env.NEXT_PUBLIC_CRAFT_API_TOKEN
+      const token = options.token || process.env.GRAPHQL_TOKEN
       if (!token) {
-        throw new Error('API token required for private/preview queries')
+        throw new Error('A GraphQL token is required for private/preview queries')
       }
       headers['Authorization'] = `Bearer ${token}`
     }

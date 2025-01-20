@@ -9,6 +9,7 @@ export const BLOG_POSTS_QUERY = `
         pageContent
         authorName
         authorId
+        sectionHandle
         postDate @formatDateTime(format: "F j, Y")
         image {
           alt

@@ -2,14 +2,8 @@ import { Preview } from '../components/Preview'
 import { Content } from '../components/Content'
 import { fetchGraphQL } from './graphql'
 
-const DEFAULT_PAGE_SIZE = 4
+const ENTRIES_PER_PAGE = 4
 
-/**
- * Creates a Next.js page component with GraphQL data fetching
- * @param {string} query - GraphQL query
- * @param {Function} transform - Data transform function
- * @param {React.Component} CustomContent - Optional custom content component
- */
 export function createPage(query, transform, CustomContent) {
   return async function Page({ params, searchParams }) {
     try {
@@ -23,12 +17,12 @@ export function createPage(query, transform, CustomContent) {
       // Handle pagination
       const resolvedParams = await searchParams
       const currentPage = parseInt(String(resolvedParams?.page || '1'))
-      const offset = (currentPage - 1) * DEFAULT_PAGE_SIZE
+      const offset = (currentPage - 1) * ENTRIES_PER_PAGE
 
       // Fetch data
       const variables = {
         uri,
-        limit: DEFAULT_PAGE_SIZE,
+        limit: ENTRIES_PER_PAGE,
         offset
       }
 
@@ -50,7 +44,6 @@ export function createPage(query, transform, CustomContent) {
         )
       }
 
-      // Transform data
       let transformedData
       try {
         transformedData = transform ? transform(data) : data?.entry || data?.entries?.[0]
@@ -62,14 +55,26 @@ export function createPage(query, transform, CustomContent) {
         throw new Error('Failed to process page data')
       }
 
+      const pageTitle = transformedData.title
+      const isBlog = transformedData.sectionHandle === 'blogPosts'
+      
+      const metadata = {
+        title: isBlog
+          ? `${pageTitle} - Blog | ${process.env.SITE_NAME}`
+          : `${pageTitle} | ${process.env.SITE_NAME}`
+      }
+
       // Render page
       const ContentComponent = CustomContent || Content
       return (
-        <ContentComponent 
-          pageData={transformedData} 
-          initialData={data} 
-          searchParams={resolvedParams}
-        />
+        <>
+          <title>{metadata.title}</title>
+          <ContentComponent 
+            pageData={transformedData} 
+            initialData={data} 
+            searchParams={resolvedParams}
+          />
+        </>
       )
     } catch (error) {
       console.error('Page Error:', {

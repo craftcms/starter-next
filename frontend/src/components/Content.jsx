@@ -21,7 +21,7 @@ export function Content({ pageData }) {
 
       <header className="container mx-auto pt-12 pb-6 px-2 text-2xl">
         {ancestors && ancestors.length > 0 && (
-          <ul className="mb-2 text-base text-slate-400">
+          <ul className="mb-2 text-base text-slate-500">
             {ancestors.map((ancestor) => (
               <li key={ancestor.uri}>
                 <Link href={`/${ancestor.uri}`}>{ancestor.title}</Link>

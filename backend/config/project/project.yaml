@@ -1,4 +1,4 @@
-dateModified: 1736371449
+dateModified: 1737345806
 elementSources:
   craft\elements\Entry:
     -
@@ -126,7 +126,7 @@ fs:
       expires: '1 years'
       hasUrls: true
       localFsPath: '@webroot/uploads'
-      localFsUrl: $CRAFT_BASE_CP_URL/uploads
+      localFsUrl: $CRAFT_URL/uploads
       subpath: null
     type: craft\cloud\fs\AssetsFs
 meta:

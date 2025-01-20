@@ -1,11 +1,12 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 export function RouteAnnouncer() {
   const pathname = usePathname()
   const [announced, setAnnounced] = useState(false)
+  const skipLinkRef = useRef(null)
 
   useEffect(() => {
     if (!announced) {
@@ -23,16 +24,43 @@ export function RouteAnnouncer() {
         announcer.textContent = message
         document.body.appendChild(announcer)
         
+        // Focus the skip link
+        if (skipLinkRef.current) {
+          skipLinkRef.current.focus()
+        }
+
         // Clean up
         setTimeout(() => {
           document.body.removeChild(announcer)
           setAnnounced(true)
         }, 1000)
-      }, 100) // Small delay to ensure h1 is available
+      }, 100)
     }
 
     return () => setAnnounced(false)
   }, [pathname, announced])
 
-  return null
+  const handleSkip = (e) => {
+    e.preventDefault()
+    const main = document.querySelector('main') || document.querySelector('h1')
+    if (main) {
+      main.setAttribute('tabindex', '-1')
+      main.focus()
+      // Remove tabindex after focus to prevent unwanted tab stop
+      main.removeAttribute('tabindex')
+    }
+  }
+
+  return (
+    <>
+      <a
+        ref={skipLinkRef}
+        href="#main"
+        onClick={handleSkip}
+        className="sr-only"
+      >
+        Skip to main content
+      </a>
+    </>
+  )
 } 

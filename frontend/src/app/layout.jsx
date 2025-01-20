@@ -30,12 +30,12 @@ export default async function RootLayout({ children }) {
           logo={globals.logo?.[0] || null}
           pages={pages}
         />
-        <div className="min-h-screen">
+        <main id="main" className="min-h-screen">
           <FlashProvider>
             <Alert />
             {children}
           </FlashProvider>
-        </div>
+        </main>
         <Footer address={globals.address?.[0] || globals.address || null} />
       </body>
     </html>

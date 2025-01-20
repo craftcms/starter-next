@@ -5,6 +5,7 @@ import { Alert } from '../components/Alert'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import "./globals.css"
+import { RouteAnnouncer } from '../components/RouteAnnouncer'
 
 export default async function RootLayout({ children }) {
   const data = await fetchGraphQL(GLOBALS_QUERY)
@@ -15,6 +16,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <RouteAnnouncer />
         <Header 
           siteName={siteName} 
           logo={globals.logo?.[0] || null}

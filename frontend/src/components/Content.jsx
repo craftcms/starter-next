@@ -24,7 +24,7 @@ export function Content({ pageData }) {
           <ul className="mb-2 text-base text-slate-400">
             {ancestors.map((ancestor) => (
               <li key={ancestor.uri}>
-                <Link href={ancestor.uri}>{ancestor.title}</Link>
+                <Link href={`/${ancestor.uri}`}>{ancestor.title}</Link>
               </li>
             ))}
           </ul>
@@ -46,14 +46,14 @@ export function Content({ pageData }) {
         />
       </section>
       {children && children.length > 0 && (
-        <footer className="page__extra">
-          <div className="container mx-auto py-12 px-2 text-balance">
+        <footer>
+          <div className="container mx-auto py-12 px-2">
             <h3 className="font-bold text-3xl mb-4">Children</h3>
             <ul>
               {children.map((child) => (
                 <li key={child.uri}>
                   <span className="text-slate-400 mr-2" aria-hidden="true">&rarr;</span>
-                  <Link href={child.uri} className="text-red-600 hover:underline">{child.title}</Link>
+                  <Link href={`/${child.uri}`} className="text-red-600 hover:underline">{child.title}</Link>
                 </li>
               ))}
             </ul>

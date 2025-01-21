@@ -5,7 +5,6 @@ import { GuestbookInteractive } from '../../components/GuestbookInteractive'
 import { FlashProvider } from '@/lib/flashes'
 import { Alert } from '@/components/Alert'
 
-export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 const transform = (data) => {

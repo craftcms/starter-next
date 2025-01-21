@@ -7,6 +7,8 @@ export const GLOBALS_QUERY = `
         logo {
           url
           alt
+          width
+          height
         }
         address {
           addressLine1

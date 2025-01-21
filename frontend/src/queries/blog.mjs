@@ -21,6 +21,8 @@ export const BLOG_QUERY = `
         image {
           alt
           url @transform(handle: "wide")
+          width
+          height
         }
       }
     }

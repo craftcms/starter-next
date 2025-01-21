@@ -20,6 +20,8 @@ export const PAGE_QUERY = `
         image {
           url @transform(handle: "hero")
           alt
+          width
+          height
         }
       }
     }

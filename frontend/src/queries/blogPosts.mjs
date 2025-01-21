@@ -14,6 +14,8 @@ export const BLOG_POSTS_QUERY = `
         image {
           alt
           url @transform(handle: "hero")
+          width
+          height
         }
         next(section: "blogPosts") {
           id

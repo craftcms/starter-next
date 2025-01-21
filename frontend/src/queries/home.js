@@ -9,6 +9,8 @@ export const HOME_QUERY = `
         image {
           url @transform(handle: "hero")
           alt
+          width
+          height
         }
       }
     }

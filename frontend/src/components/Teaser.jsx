@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export function Teaser({ entry, featured = false }) {
   return (
@@ -10,9 +11,12 @@ export function Teaser({ entry, featured = false }) {
             className="text-red-600 hover:underline focus:underline cursor-pointer block mb-4"
           >
             {entry.image && entry.image.length > 0 ? (
-              <img 
+              <Image 
                 src={entry.image[0].url} 
-                alt={entry.image[0].alt} 
+                alt={entry.image[0].alt || ''} 
+                width={entry.image[0].width} 
+                height={entry.image[0].height} 
+                className="w-full h-auto"
               />
             ) : (
               <div className="bg-slate-200 aspect-video hover:bg-slate-300" />

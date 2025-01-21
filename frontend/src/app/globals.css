@@ -2,3 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  a:focus-visible {
+    @apply outline-none ring-2 ring-red-600 ring-offset-2 rounded;
+  }
+}

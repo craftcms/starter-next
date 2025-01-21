@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
-export function Content({ pageData }) {
+export function Content({ pageData = {} }) {
   const {
     title,
     pageSubheading,
-    pageContent,
+    pageContent = '',
     image,
     ancestors,
     children
@@ -15,7 +15,7 @@ export function Content({ pageData }) {
       {/* Hero Image */}
       {image && image.length > 0 && (
         <figure>
-          <img src={image[0].url} alt={image[0].alt} />
+          <img src={image[0].url} alt={image[0].alt || ''} />
         </figure>
       )}
 
@@ -29,9 +29,11 @@ export function Content({ pageData }) {
             ))}
           </ul>
         )}
-        <h1 className="font-bold text-4xl sm:text-6xl lg:text-9xl">
-          {title}
-        </h1>
+        {title && (
+          <h1 className="font-bold text-4xl sm:text-6xl lg:text-9xl">
+            {title}
+          </h1>
+        )}
         {pageSubheading && (
           <p className="mt-4">
             {pageSubheading}
@@ -39,12 +41,15 @@ export function Content({ pageData }) {
         )}
       </header>
 
-      <section className="page__content">
-        <div 
-          className="container mx-auto py-12 px-2 text-balance prose prose-slate lg:prose-xl" 
-          dangerouslySetInnerHTML={{ __html: pageContent }}
-        />
-      </section>
+      {pageContent && (
+        <section className="page__content">
+          <div 
+            className="container mx-auto py-12 px-2 text-balance prose prose-slate lg:prose-xl" 
+            dangerouslySetInnerHTML={{ __html: pageContent }}
+          />
+        </section>
+      )}
+      
       {children && children.length > 0 && (
         <footer>
           <div className="container mx-auto py-12 px-2">

@@ -1,6 +1,9 @@
 import { createPage } from '../../lib/createPage'
 import { PAGE_QUERY } from '../../queries/pages'
 
+export const dynamic = 'force-static'
+export const revalidate = 3600
+
 // Custom transform function to match the data structure
 const transform = (data) => {
   if (!data?.entry) {

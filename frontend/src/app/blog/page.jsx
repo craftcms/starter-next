@@ -4,8 +4,8 @@ import { Content } from '../../components/Content'
 import { Teaser } from '../../components/Teaser'
 import { Pagination } from '../../components/Pagination'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+export const dynamic = 'force-static'
+export const revalidate = 3600
 
 const transform = (data) => {
   if (!data?.blogEntries?.[0]) {

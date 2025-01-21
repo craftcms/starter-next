@@ -1,6 +1,9 @@
 import { createPage } from '../../../lib/createPage'
 import { BLOG_POSTS_QUERY } from '../../../queries/blogPosts'
 
+export const dynamic = 'force-static'
+export const revalidate = 3600
+
 const transform = (data) => {
   if (!data?.blogPostsEntries?.[0]) {
     throw new Error('Page not found')

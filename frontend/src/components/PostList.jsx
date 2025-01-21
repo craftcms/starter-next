@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
+import { useState, useEffect, forwardRef, useImperativeHandle, useCallback } from 'react'
 import { fetchGraphQL } from '../lib/graphql'
 import { GUESTBOOK_POSTS_QUERY } from '../queries/guestbookPosts'
 import { Pagination } from './Pagination'
@@ -16,7 +16,7 @@ export const PostList = forwardRef(function PostList({ onRefresh }, ref) {
   const currentPage = parseInt(searchParams.get('page')) || 1
   const perPage = 4
 
-  const loadPosts = async (page = currentPage) => {
+  const loadPosts = useCallback(async (page = currentPage) => {
     setLoading(true)
     try {
       const result = await fetchGraphQL(
@@ -45,7 +45,7 @@ export const PostList = forwardRef(function PostList({ onRefresh }, ref) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [currentPage, onRefresh, perPage])
 
   // Expose refresh method to parent
   useImperativeHandle(ref, () => ({
@@ -53,11 +53,11 @@ export const PostList = forwardRef(function PostList({ onRefresh }, ref) {
       router.push('/guestbook?page=1')
       loadPosts(1)
     }
-  }))
+  }), [router, loadPosts])
 
   useEffect(() => {
     loadPosts(currentPage)
-  }, [currentPage])
+  }, [currentPage, loadPosts])
 
   const totalPages = Math.ceil((data?.total || 0) / perPage)
 

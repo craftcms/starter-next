@@ -9,10 +9,10 @@ scope:
   - 'sections.bd99645a-4524-40e4-83dc-c6b12e023bab:read' # Global
   - 'sections.aef20f9c-5c84-4c50-8a18-acf0452db62f:read' # Guestbook
   - 'sections.cdad2202-5d55-49ba-995e-962503f5887f:read' # Home
-  - 'sections.6ba54824-1c3f-454f-8830-f6cea379bee4:read' # Blog Posts
   - 'sections.70b2614b-639a-4de2-8c11-3851d36d6f8c:read' # Blog Categories
-  - 'sections.c4b4f50d-7d62-4a4c-bbf8-7aae00fd82c7:read' # Pages
+  - 'sections.6ba54824-1c3f-454f-8830-f6cea379bee4:read' # Blog Posts
   - 'sections.3e2a1a6f-88ea-477b-936d-39393f2d594f:read' # Guestbook Posts
+  - 'sections.c4b4f50d-7d62-4a4c-bbf8-7aae00fd82c7:read' # Pages
   - 'nestedentryfields.0a58e287-e038-4eb7-ab2a-cf4cbdbe013d:read' # Page content
   - 'nestedentryfields.2bae9725-9546-4f55-a889-56102191aa89:read' # Navigation
   - 'volumes.7b9364bd-2215-495a-8b0b-2280df887a8b:read' # Media

@@ -13,21 +13,39 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }) {
-  const data = await fetchGraphQL(GLOBALS_QUERY)
-  const globals = data?.globalEntries?.[0] || {}
-  const pages = data?.pagesEntries || []
+  let globals = {}
+  let pages = []
+
+  try {
+    const data = await fetchGraphQL(GLOBALS_QUERY, {}, {
+      cache: 'force-cache',
+      next: { revalidate: 3600 }
+    })
+
+    if (!data) {
+      console.error('No data returned from globals query')
+    } else {
+      globals = data?.globalEntries?.[0] || {}
+      pages = data?.pagesEntries || []
+    }
+  } catch (error) {
+    console.error('Error fetching globals:', error)
+  }
+
   const siteName = process.env.SITE_NAME || ''
 
   return (
     <html lang="en">
       <head>
-        <title>{metadata.title}</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
         <RouteAnnouncer />
         <Header 
           siteName={siteName} 
-          logo={globals.logo?.[0] || null}
+          logo={globals?.logo?.[0] || null}
           pages={pages}
         />
         <main id="main" className="min-h-screen">
@@ -36,7 +54,9 @@ export default async function RootLayout({ children }) {
             {children}
           </FlashProvider>
         </main>
-        <Footer address={globals.address?.[0] || globals.address || null} />
+        <Footer 
+          address={globals?.address?.[0] || globals?.address || null} 
+        />
       </body>
     </html>
   )

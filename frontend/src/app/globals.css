@@ -3,7 +3,21 @@
 @tailwind utilities;
 
 @layer base {
-  a:focus-visible {
+  :focus-visible {
+    @apply outline-none ring-2 ring-red-600 ring-offset-2;
+  }
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
     @apply outline-none ring-2 ring-red-600 ring-offset-2 rounded;
   }
+}
+nav a {
+  @apply relative;
+}
+
+nav a:focus-visible {
+  @apply outline-none ring-2 ring-red-600 ring-offset-2 rounded-sm z-10;
 }

@@ -7,12 +7,14 @@ export default function Navigation({ pages = [] }) {
   const pathname = usePathname()
   
   return (
-    <nav className="sm:basis-2/3 grow-1" aria-label="Primary">
-      <ul className="sm:flex">
-        <li>
+    <nav className="sm:basis-2/3 grow-1 relative z-10" aria-label="Primary">
+      <ul className="sm:flex" role="menubar">
+        <li role="none" className="relative">
           <Link 
             href="/blog" 
-            className={`block p-2 hover:underline ${
+            role="menuitem"
+            tabIndex={0}
+            className={`block p-2 hover:underline outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 ${
               pathname === '/blog' ? 'text-black' : 'text-red-600 hover:text-red-600'
             }`}
             aria-current={pathname === '/blog' ? 'page' : undefined}
@@ -20,10 +22,12 @@ export default function Navigation({ pages = [] }) {
             Blog
           </Link>
         </li>
-        <li>
+        <li role="none" className="relative">
           <Link 
             href="/guestbook" 
-            className={`block p-2 ${
+            role="menuitem"
+            tabIndex={0}
+            className={`block p-2 outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 ${
               pathname === '/guestbook' ? 'text-black' : 'text-red-600 hover:text-red-600 hover:underline'
             }`}
             aria-current={pathname === '/guestbook' ? 'page' : undefined}
@@ -34,32 +38,36 @@ export default function Navigation({ pages = [] }) {
         {pages.map(page => {
           const isCurrentPage = pathname === `/${page.uri}`
           const hasChildren = page.children && page.children.length > 0
-          // Check if we're on any of the child pages
           const isOnChildPage = hasChildren && page.children.some(child => 
             pathname === `/${child.uri}` || 
             child.children?.some(grandchild => pathname === `/${grandchild.uri}`)
           )
           
           return (
-            <li key={page.id}>
+            <li key={page.id} role="none" className="relative">
               <Link 
                 href={`/${page.uri}`}
-                className={`block p-2 ${
+                role="menuitem"
+                tabIndex={0}
+                aria-expanded={hasChildren && (isCurrentPage || isOnChildPage) ? 'true' : 'false'}
+                aria-haspopup={hasChildren ? 'true' : undefined}
+                className={`block p-2 outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 ${
                   isCurrentPage ? 'text-black' : 'text-red-600 hover:text-red-600 hover:underline'
                 }`}
                 aria-current={isCurrentPage ? 'page' : undefined}
               >
                 {page.title}
               </Link>
-              {/* Show children if we're on the parent page OR any child page */}
               {hasChildren && (isCurrentPage || isOnChildPage) && (
-                <ul className="">
+                <ul role="menu" className="pl-4 sm:pl-2">
                   {page.children.map(child => (
-                    <li key={child.id}>
+                    <li key={child.id} role="none" className="relative">
                       <Link 
                         href={`/${child.uri}`}
-                        className={`block pl-6 sm:pl-2 p-1 ${
-                          pathname === `/${child.uri}` ? 'text-black' : 'text-red-600 hover:underline hover:text-red-600 '
+                        role="menuitem"
+                        tabIndex={0}
+                        className={`block p-1 outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 ${
+                          pathname === `/${child.uri}` ? 'text-black' : 'text-red-600 hover:underline hover:text-red-600'
                         }`}
                         aria-current={pathname === `/${child.uri}` ? 'page' : undefined}
                       >

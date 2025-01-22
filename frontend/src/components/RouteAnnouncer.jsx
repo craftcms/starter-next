@@ -9,20 +9,24 @@ export function RouteAnnouncer() {
   const previousPathRef = useRef(pathname)
 
   useEffect(() => {
-    // Debug focusable elements
-    const focusableElements = document.querySelectorAll(
-      'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    )
-    console.log('Focusable elements:', focusableElements)
-
-    // Only announce and focus if the path has actually changed
     if (previousPathRef.current !== pathname) {
       // Wait for the new page content to be ready
       requestAnimationFrame(() => {
+        // Force a reflow to ensure focus is managed correctly
+        document.body.getBoundingClientRect()
+
+        // Find the first focusable element in the main content
+        const main = document.querySelector('main')
+        const focusableElements = main?.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+
+        // Get page title for announcement
         const h1 = document.querySelector('h1')
         const pageTitle = h1 ? h1.textContent : pathname
         const message = `Navigated to ${pageTitle}`
         
+        // Create and append live region
         const announcer = document.createElement('div')
         announcer.setAttribute('aria-live', 'assertive')
         announcer.setAttribute('aria-atomic', 'true')
@@ -31,10 +35,24 @@ export function RouteAnnouncer() {
         announcer.textContent = message
         document.body.appendChild(announcer)
 
-        // Focus the skip link only on route changes and when appropriate
-        if (skipLinkRef.current && 
-            (!document.activeElement || document.activeElement === document.body)) {
-          skipLinkRef.current.focus()
+        // Focus management
+        if (skipLinkRef.current) {
+          // Always make skip link focusable
+          skipLinkRef.current.setAttribute('tabindex', '0')
+          
+          // Focus skip link on navigation if no specific element needs focus
+          if (!document.activeElement || document.activeElement === document.body) {
+            skipLinkRef.current.focus()
+          }
+        }
+
+        // Debug info in development
+        if (process.env.NODE_ENV === 'development') {
+          console.group('Route Change Focus Management')
+          console.log('Focusable elements:', focusableElements)
+          console.log('Current focus:', document.activeElement)
+          console.log('Skip link:', skipLinkRef.current)
+          console.groupEnd()
         }
 
         // Clean up
@@ -51,7 +69,6 @@ export function RouteAnnouncer() {
     e.preventDefault()
     const main = document.querySelector('main')
     if (main) {
-      // Ensure main is focusable but won't remain in tab order
       main.setAttribute('tabindex', '-1')
       main.focus()
       
@@ -67,7 +84,7 @@ export function RouteAnnouncer() {
       ref={skipLinkRef}
       href="#main"
       onClick={handleSkip}
-      className="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:top-4 focus:left-4 focus:bg-white focus:p-4 focus:rounded focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+      className="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:top-4 focus:left-4 focus:bg-white focus:p-4 focus:rounded focus:shadow-lg"
     >
       Skip to main content
     </a>

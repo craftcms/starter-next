@@ -4,6 +4,7 @@ module.exports = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
     "./backend/templates/**/*.twig",
   ],
   theme: {
@@ -11,6 +12,15 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+      },
+      ringColor: {
+        DEFAULT: 'var(--ring-color, #dc2626)',
+      },
+      ringWidth: {
+        DEFAULT: '2px',
+      },
+      ringOffsetWidth: {
+        DEFAULT: '2px',
       },
     },
   },
@@ -40,6 +50,14 @@ module.exports = {
       pattern: /p-.+/,
       variants: ['lg', 'md', 'sm']
     },
+    'focus:outline-none',
+    'focus:ring-2',
+    'focus:ring-red-600',
+    'focus:ring-offset-2',
+    'focus-visible:outline-none',
+    'focus-visible:ring-2',
+    'focus-visible:ring-red-600',
+    'focus-visible:ring-offset-2',
     'aspect-w-16',
     'aspect-h-9'
   ]

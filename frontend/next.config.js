@@ -1,16 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    domains: [process.env.CRAFT_DOMAIN],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: process.env.CRAFT_DOMAIN,
-        pathname: '/**',
-      },
-      {
-        protocol: 'http',
-        hostname: process.env.CRAFT_DOMAIN,
-        pathname: '/**',
+        pathname: '/uploads/**',
       }
     ]
   },
@@ -22,6 +18,20 @@ const nextConfig = {
   },
   reactStrictMode: true,
   poweredByHeader: false,
+  compress: true,
+  experimental: {
+    optimizeCss: true,
+    scrollRestoration: true,
+    serverActions: true
+  },
+  onError: async (err) => {
+    console.error('Next.js Error:', err)
+  },
+  logging: process.env.NODE_ENV === 'development' ? {
+    fetches: {
+      fullUrl: true,
+    },
+  } : undefined,
 }
 
 module.exports = nextConfig

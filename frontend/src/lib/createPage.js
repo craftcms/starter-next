@@ -8,15 +8,18 @@ const ENTRIES_PER_PAGE = 4
 export function createPage(query, transform, CustomContent) {
   return async function Page({ params, searchParams }) {
     try {
-      const { slug } = params
+      const resolvedParams = await params
+      const resolvedSearchParams = await searchParams
+      
+      const { slug } = resolvedParams
       const uri = Array.isArray(slug) ? slug.join('/') : slug || ''
-      const currentPage = parseInt(String(searchParams?.page || '1'))
+      const currentPage = parseInt(String(resolvedSearchParams?.page || '1'))
       const offset = (currentPage - 1) * ENTRIES_PER_PAGE
 
       // Handle preview mode
       const isPreview = Boolean(
-        searchParams?.token && 
-        searchParams?.['x-craft-live-preview']
+        resolvedSearchParams?.token && 
+        resolvedSearchParams?.['x-craft-live-preview']
       )
 
       const options = {
@@ -50,7 +53,6 @@ export function createPage(query, transform, CustomContent) {
       try {
         transformedData = transform ? transform(data) : data?.entry || data?.entries?.[0]
         
-        // If transform returns null or undefined, return 404
         if (!transformedData) {
           notFound()
         }
@@ -75,7 +77,7 @@ export function createPage(query, transform, CustomContent) {
           <ContentComponent 
             pageData={transformedData} 
             initialData={data} 
-            searchParams={searchParams}
+            searchParams={resolvedSearchParams}
           />
         </>
       )

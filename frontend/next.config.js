@@ -19,14 +19,6 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  experimental: {
-    optimizeCss: true,
-    scrollRestoration: true,
-    serverActions: true
-  },
-  onError: async (err) => {
-    console.error('Next.js Error:', err)
-  },
   logging: process.env.NODE_ENV === 'development' ? {
     fetches: {
       fullUrl: true,

@@ -5,7 +5,7 @@ import { Alert } from '../components/Alert'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import "./globals.css"
-import { RouteAnnouncer } from '../components/RouteAnnouncer'
+import { SkipLink } from '../components/SkipLink'
 
 export const metadata = {
   title: process.env.SITE_NAME,
@@ -42,7 +42,7 @@ export default async function RootLayout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
-        <RouteAnnouncer />
+        <SkipLink />
         <Header 
           siteName={siteName} 
           logo={globals?.logo?.[0] || null}

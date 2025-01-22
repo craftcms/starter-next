@@ -4,16 +4,16 @@ const DEFAULT_OPTIONS = {
   token: null
 }
 
-export async function fetchGraphQL(query, variables = {}, options = DEFAULT_OPTIONS) {
+export async function fetchGraphQL(query, variables = {}, options = {}) {
   try {
-    const apiBaseUrl = process.env.CRAFT_URL
-    const apiBasePath = 'api';
+    const apiBaseUrl = process.env.CRAFT_URL?.replace(/\/$/, '')
+    const apiBasePath = '/api'
 
-    if (!apiUrl) {
-      throw new Error('CRAFT_URL has not been set for this environment')
+    if (!apiBaseUrl) {
+      throw new Error('CRAFT_URL environment variable is not set')
     }
 
-    const apiUrl = `${apiBaseUrl}/${apiBasePath}`;
+    const apiUrl = `${apiBaseUrl}${apiBasePath}`
 
     const headers = {
       'Content-Type': 'application/json',
@@ -41,20 +41,15 @@ export async function fetchGraphQL(query, variables = {}, options = DEFAULT_OPTI
       credentials: 'include',
     })
 
-    const result = await response.json()
-
-    // Handle GraphQL errors
-    if (result.errors) {
-      console.error('GraphQL Errors:', result.errors)
-      const errorMessage = result.errors
-        .map(error => error.message)
-        .join(', ')
-      throw new Error(`GraphQL Error: ${errorMessage}`)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    // Validate response data
-    if (!result.data) {
-      throw new Error('No data returned from GraphQL')
+    const result = await response.json()
+
+    if (result.errors) {
+      console.error('GraphQL Errors:', result.errors)
+      return null
     }
 
     return result.data
@@ -64,6 +59,11 @@ export async function fetchGraphQL(query, variables = {}, options = DEFAULT_OPTI
       query,
       variables
     })
-    throw error
+    
+    if (process.env.NODE_ENV === 'development') {
+      throw error
+    }
+    
+    return null
   }
 }

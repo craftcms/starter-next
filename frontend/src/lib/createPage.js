@@ -5,7 +5,7 @@ import { fetchGraphQL } from './graphql'
 
 const ENTRIES_PER_PAGE = 4
 
-export function createPage(query, transform, CustomContent) {
+export function createPage(query, transform, CustomContent, options = {}) {
   return async function Page({ params, searchParams }) {
     try {
       const resolvedParams = await params
@@ -13,25 +13,20 @@ export function createPage(query, transform, CustomContent) {
       
       const { slug } = resolvedParams
       const uri = Array.isArray(slug) ? slug.join('/') : slug || ''
-      const currentPage = parseInt(String(resolvedSearchParams?.page || '1'))
-      const offset = (currentPage - 1) * ENTRIES_PER_PAGE
-
-      // Handle preview mode
-      const isPreview = Boolean(
-        resolvedSearchParams?.token && 
-        resolvedSearchParams?.['x-craft-live-preview']
-      )
-
-      const options = {
-        preview: isPreview,
-        revalidate: isPreview ? 0 : 3600
+      
+      // Merge default variables with options
+      const variables = {
+        uri,
+        ...options.variables
       }
 
-      const data = await fetchGraphQL(query, {
-        uri,
-        limit: ENTRIES_PER_PAGE,
-        offset
-      }, options)
+      const data = await fetchGraphQL(query, variables, {
+        preview: Boolean(
+          resolvedSearchParams?.token && 
+          resolvedSearchParams?.['x-craft-live-preview']
+        ),
+        revalidate: 3600
+      })
 
       // Handle missing data
       if (!data) {
@@ -39,12 +34,15 @@ export function createPage(query, transform, CustomContent) {
       }
 
       // Handle preview mode
-      if (isPreview) {
+      if (Boolean(
+        resolvedSearchParams?.token && 
+        resolvedSearchParams?.['x-craft-live-preview']
+      )) {
         return (
           <Preview 
             initialData={data} 
             query={query}
-            variables={{ uri, limit: ENTRIES_PER_PAGE, offset }}
+            variables={variables}
           />
         )
       }
@@ -63,11 +61,16 @@ export function createPage(query, transform, CustomContent) {
 
       const pageTitle = transformedData.title
       const isBlog = transformedData.sectionHandle === 'blogPosts'
+      const isGuestbook = transformedData.sectionHandle === 'guestbook'
+      
+      // Create page title with pagination info
+      let title = pageTitle
+      if ((isBlog || isGuestbook) && parseInt(String(resolvedSearchParams?.page || '1')) > 1) {
+        title = `${pageTitle} (Page ${parseInt(String(resolvedSearchParams?.page || '1'))})`
+      }
       
       const metadata = {
-        title: isBlog
-          ? `${pageTitle} - Blog | ${process.env.SITE_NAME}`
-          : `${pageTitle} | ${process.env.SITE_NAME}`
+        title: `${title} | ${process.env.SITE_NAME}`
       }
 
       const ContentComponent = CustomContent || Content

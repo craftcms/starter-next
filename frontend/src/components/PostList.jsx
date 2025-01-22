@@ -16,6 +16,15 @@ export const PostList = forwardRef(function PostList({ onRefresh }, ref) {
   const currentPage = parseInt(searchParams.get('page')) || 1
   const perPage = 4
 
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const baseTitle = 'Guestbook'
+      const pageSuffix = currentPage > 1 ? ` (Page ${currentPage})` : ''
+      const siteName = process.env.SITE_NAME
+      document.title = `${baseTitle}${pageSuffix} | ${siteName}`
+    }
+  }, [currentPage])
+
   const loadPosts = useCallback(async (page = currentPage) => {
     setLoading(true)
     try {
@@ -92,6 +101,7 @@ export const PostList = forwardRef(function PostList({ onRefresh }, ref) {
             <Pagination 
               currentPage={currentPage}
               totalPages={totalPages}
+              pageTitle="Guestbook"
               onPageChange={handlePageChange}
             />
           )}

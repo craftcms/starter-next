@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation'
 import { createPage } from '../../lib/createPage'
 import { GUESTBOOK_QUERY } from '../../queries/guestbook'
 import { Content } from '../../components/Content'
@@ -9,7 +10,7 @@ export const revalidate = 0
 
 const transform = (data) => {
   if (!data?.guestbookEntries?.[0]) {
-    throw new Error('Guestbook page not found')
+    return notFound()
   }
   
   const entry = data.guestbookEntries[0]

@@ -84,7 +84,7 @@ export function RouteAnnouncer() {
       ref={skipLinkRef}
       href="#main"
       onClick={handleSkip}
-      className="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:top-4 focus:left-4 focus:bg-white focus:p-4 focus:rounded focus:shadow-lg"
+      className="sr-only"
     >
       Skip to main content
     </a>

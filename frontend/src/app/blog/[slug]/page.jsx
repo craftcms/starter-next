@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation'
 import { createPage } from '../../../lib/createPage'
 import { BLOG_POSTS_QUERY } from '../../../queries/blogPosts'
 
@@ -6,7 +7,7 @@ export const revalidate = 3600
 
 const transform = (data) => {
   if (!data?.blogPostsEntries?.[0]) {
-    throw new Error('Page not found')
+    return notFound()
   }
   
   const post = data.blogPostsEntries[0]

@@ -1,9 +1,10 @@
 import Link from 'next/link'
+export const dynamic = 'force-static' 
 
 export default function NotFound() {
   return (
     <div className="container mx-auto px-4 py-16">
-      <h1 className="text-4xl font-bold mb-4">404 - Page Not Found</h1>
+      <h1 className="text-6xl font-bold mb-4">404 - Page Not Found</h1>
       <p className="mb-4">Sorry, we couldn&apos;t find the page you&apos;re looking for.</p>
       <Link 
         href="/" 
@@ -14,5 +15,3 @@ export default function NotFound() {
     </div>
   )
 }
-
-export const dynamic = 'force-static' 

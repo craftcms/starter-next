@@ -1,30 +1,26 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export function Pagination({ currentPage, totalPages, pageTitle }) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  // Update document title when page changes
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const baseTitle = pageTitle || document.title.split('|')[0].trim()
-      const pageSuffix = currentPage > 1 ? ` (Page ${currentPage})` : ''
-      const siteName = process.env.SITE_NAME
-      document.title = `${baseTitle}${pageSuffix} | ${siteName}`
-    }
+    if (typeof document === 'undefined') return
+
+    const baseTitle = pageTitle || document.title.split('|')[0].trim()
+    const pageSuffix = currentPage > 1 ? ` (Page ${currentPage})` : ''
+    document.title = `${baseTitle}${pageSuffix} | ${process.env.SITE_NAME}`
   }, [currentPage, pageTitle])
 
   const updateCurrentPage = (newPage) => {
     const params = new URLSearchParams(searchParams)
     params.set('page', newPage.toString())
-    const newUrl = `?${params.toString()}`
-    router.push(newUrl)
+    router.push(`?${params.toString()}`)
   }
 
-  // Calculate page numbers for display
   const prevPageNum = Math.max(1, currentPage - 1)
   const nextPageNum = Math.min(totalPages, currentPage + 1)
 

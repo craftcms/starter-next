@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useCallback } from 'react'
 
 const FlashContext = createContext(null)
+const FLASH_DURATION = 5000
 
 export function FlashProvider({ children }) {
   const [flashes, setFlashes] = useState([])
@@ -10,11 +11,9 @@ export function FlashProvider({ children }) {
   const addFlash = useCallback((message, level = 'info') => {
     const id = Date.now()
     setFlashes(prev => [...prev, { id, message, level }])
-    
-    // Auto-remove after 5 seconds
     setTimeout(() => {
       setFlashes(prev => prev.filter(flash => flash.id !== id))
-    }, 5000)
+    }, FLASH_DURATION)
   }, [])
 
   const removeFlash = useCallback((id) => {

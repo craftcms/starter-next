@@ -20,13 +20,12 @@ export function usePagination(initialItemsPerPage = 4) {
   const updateCurrentPage = (newPage) => {
     if (newPage > 0 && newPage <= totalPages && newPage !== currentPage) {
       const params = new URLSearchParams(searchParams)
-      params.set('page', newPage)
+      params.set('page', newPage.toString())
       router.push(`?${params.toString()}`)
       setCurrentPage(newPage)
     }
   }
 
-  // Update current page when URL changes
   useEffect(() => {
     const page = parseInt(searchParams.get('page')) || 1
     setCurrentPage(page)

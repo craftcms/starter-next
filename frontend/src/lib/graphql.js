@@ -4,7 +4,7 @@ const DEFAULT_OPTIONS = {
   token: null
 }
 
-export async function fetchGraphQL(query, variables = {}, options = {}) {
+export async function fetchGraphQL(query, variables = {}, options = DEFAULT_OPTIONS) {
   try {
     const apiBaseUrl = process.env.CRAFT_URL?.replace(/\/$/, '')
     const apiBasePath = '/api'
@@ -12,8 +12,6 @@ export async function fetchGraphQL(query, variables = {}, options = {}) {
     if (!apiBaseUrl) {
       throw new Error('CRAFT_URL environment variable is not set')
     }
-
-    const apiUrl = `${apiBaseUrl}${apiBasePath}`
 
     const headers = {
       'Content-Type': 'application/json',
@@ -34,7 +32,7 @@ export async function fetchGraphQL(query, variables = {}, options = {}) {
       headers['X-Craft-Token'] = options.token
     }
 
-    const response = await fetch(apiUrl, {
+    const response = await fetch(`${apiBaseUrl}${apiBasePath}`, {
       method: 'POST',
       headers,
       body: JSON.stringify({ query, variables }),

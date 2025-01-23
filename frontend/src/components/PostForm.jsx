@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { fetchGraphQL } from '@/lib/graphql'
-import { CREATE_POST_MUTATION } from '@/queries/post.mjs'
-import { useFlashes } from '@/lib/flashes'
+import { useFlashes } from '../lib/flashes'
+import { fetchGraphQL } from '../lib/graphql'
+import { CREATE_POST_MUTATION } from '../queries/post'
 
 export function PostForm({ authorId, onPostSubmitted }) {
   const [message, setMessage] = useState('')
@@ -12,12 +12,11 @@ export function PostForm({ authorId, onPostSubmitted }) {
 
   const generateTitle = (text) => {
     const words = text.split(' ').slice(0, 3).join(' ').trim()
-    return `Post: ${words}${words ? '...' : ''}`
+    return words ? `Post: ${words}...` : 'Post'
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
     if (!message.trim()) return
 
     setLoading(true)
@@ -26,7 +25,7 @@ export function PostForm({ authorId, onPostSubmitted }) {
         CREATE_POST_MUTATION, 
         {
           title: generateTitle(message),
-          message: message,
+          message,
           authorId: authorId.toString()
         },
         { private: true }
@@ -38,11 +37,7 @@ export function PostForm({ authorId, onPostSubmitted }) {
 
       setMessage('')
       addFlash('Your message has been posted successfully!', 'success')
-      
-      if (onPostSubmitted) {
-        onPostSubmitted()
-      }
-      
+      onPostSubmitted?.()
     } catch (error) {
       addFlash(error.message || 'Failed to create post', 'error')
     } finally {
@@ -61,7 +56,7 @@ export function PostForm({ authorId, onPostSubmitted }) {
           id="message" 
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-        ></textarea>
+        />
       </div>
       <input 
         type="submit" 

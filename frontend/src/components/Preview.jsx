@@ -6,17 +6,15 @@ import { fetchGraphQL } from '../lib/graphql'
 import { Content } from './Content'
 
 export function Preview({ initialData, query, variables = {} }) {
-  const { previewToken, previewTimestamp } = usePreview()
+  const { previewToken } = usePreview()
   const [data, setData] = useState(initialData)
 
   useEffect(() => {
     if (previewToken) {
-      // Re-request the preview data:
       fetchGraphQL(query, variables, {
         preview: true,
         token: previewToken,
-      })
-        .then(newData => setData(newData))
+      }).then(newData => setData(newData))
     }
   }, [previewToken, query, variables])
 

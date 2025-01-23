@@ -6,27 +6,37 @@ import { usePathname } from 'next/navigation'
 export default function Navigation({ pages = [] }) {
   const pathname = usePathname()
   
+  const isActiveOrChild = (page) => {
+    const currentPath = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname
+    const pagePath = `/${page.uri}`
+    return currentPath === pagePath || currentPath.startsWith(`${pagePath}/`)
+  }
+  
   const renderPageLinks = (pages) => {
-    return pages.map(page => (
-      <li key={page.id} role="none" className="relative">
-        <Link 
-          href={`/${page.uri}`}
-          role="menuitem"
-          tabIndex={0}
-          className={`block p-2 hover:underline outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 ${
-            pathname === `/${page.uri}` ? 'text-black' : 'text-red-600 hover:text-red-600'
-          }`}
-          aria-current={pathname === `/${page.uri}` ? 'page' : undefined}
-        >
-          {page.title}
-        </Link>
-        {page.children?.length > 0 && (
-          <ul className="pl-4" role="menu">
-            {renderPageLinks(page.children)}
-          </ul>
-        )}
-      </li>
-    ))
+    return pages.map(page => {
+      const isActive = isActiveOrChild(page)
+      
+      return (
+        <li key={page.id} role="none" className="relative">
+          <Link 
+            href={`/${page.uri}`}
+            role="menuitem"
+            tabIndex={0}
+            className={`block p-2 hover:underline outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 ${
+              pathname === `/${page.uri}` ? 'text-black' : 'text-red-600 hover:text-red-600'
+            }`}
+            aria-current={pathname === `/${page.uri}` ? 'page' : undefined}
+          >
+            {page.title}
+          </Link>
+          {page.children?.length > 0 && isActive && (
+            <ul className="pl-4" role="menu">
+              {renderPageLinks(page.children)}
+            </ul>
+          )}
+        </li>
+      )
+    })
   }
   
   return (

@@ -1,10 +1,11 @@
+import { Image } from './Image'
 import Link from 'next/link'
 
 export function Content({ pageData = {} }) {
   const {
     title,
     pageSubheading,
-    pageContent = '',
+    pageContent,
     image,
     ancestors,
     children
@@ -13,14 +14,14 @@ export function Content({ pageData = {} }) {
   return (
     <div>
       {/* Hero Image */}
-      {image && image.length > 0 && (
+      {image?.length > 0 && (
         <figure>
-          <img src={image[0].url} alt={image[0].alt || ''} />
+          <Image image={image[0]} />
         </figure>
       )}
 
       <header className="container mx-auto pt-12 pb-6 px-2 text-2xl">
-        {ancestors && ancestors.length > 0 && (
+        {ancestors?.length > 0 && (
           <ul className="mb-2 text-base text-slate-500">
             {ancestors.map((ancestor) => (
               <li key={ancestor.uri}>
@@ -35,9 +36,7 @@ export function Content({ pageData = {} }) {
           </h1>
         )}
         {pageSubheading && (
-          <p className="mt-4">
-            {pageSubheading}
-          </p>
+          <p className="mt-4">{pageSubheading}</p>
         )}
       </header>
 

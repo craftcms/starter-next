@@ -5,8 +5,10 @@ import { Content } from '../../components/Content'
 import { GuestbookInteractive } from '../../components/GuestbookInteractive'
 import { FlashProvider } from '@/lib/flashes'
 import { Alert } from '@/components/Alert'
+import { fetchGraphQL } from '../../lib/graphql'
 
-export const revalidate = 0
+export const dynamic = 'force-static'
+export const revalidate = 3600
 
 const transform = (data) => {
   if (!data?.guestbookEntries?.[0]) {
@@ -23,16 +25,18 @@ const transform = (data) => {
   }
 }
 
-function GuestbookPage({ pageData }) {
+export default async function Page(props) {
+  // Fetch and transform the data directly instead of using createPage
+  const data = await fetchGraphQL(GUESTBOOK_QUERY, {})
+  const pageData = transform(data)
+
   return (
     <FlashProvider>
       <Alert />
       <Content pageData={pageData} />
-      <GuestbookInteractive authorId={pageData.authorId} />
+      <div className="mt-8">
+        <GuestbookInteractive authorId={pageData.authorId} />
+      </div>
     </FlashProvider>
   )
-}
-
-export default function Page(props) {
-  return createPage(GUESTBOOK_QUERY, transform, GuestbookPage)(props)
 }

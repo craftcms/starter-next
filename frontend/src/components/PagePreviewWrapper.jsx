@@ -17,12 +17,8 @@ export function PagePreviewWrapper({ data, transformedData, query, variables, Cu
     )
   }
 
-  if (!transformedData) {
-    return null // or some error state
-  }
+  if (!transformedData) return null
 
-  // If CustomContent is provided, use it, otherwise fall back to Content
   const ContentComponent = CustomContent || Content
-
   return <ContentComponent pageData={transformedData} initialData={data} />
 } 

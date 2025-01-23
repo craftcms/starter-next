@@ -46,11 +46,10 @@ export function createPage(query, transform, CustomContent, options = {}) {
       const isBlog = data?.entry?.sectionHandle === 'blogPosts' || data?.entries?.[0]?.sectionHandle === 'blogPosts'
       const isGuestbook = data?.entry?.sectionHandle === 'guestbook' || data?.entries?.[0]?.sectionHandle === 'guestbook'
       
-      let title = pageTitle
-      if ((isBlog || isGuestbook) && parseInt(String(resolvedSearchParams?.page || '1')) > 1) {
-        title = `${pageTitle} (Page ${parseInt(String(resolvedSearchParams?.page || '1'))})`
-      }
-      
+      const title = (isBlog || isGuestbook) && parseInt(String(resolvedSearchParams?.page || '1')) > 1 
+        ? `${pageTitle} (Page ${parseInt(String(resolvedSearchParams?.page || '1'))})` 
+        : pageTitle
+
       const metadata = {
         title: `${title} | ${process.env.SITE_NAME}`
       }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d111679a87ec2c72c915fe7a34598780",
+    "content-hash": "104549086fe5fab78eb608f7d5923773",
     "packages": [
         {
             "name": "99designs/http-signatures",
@@ -541,11 +541,11 @@
         },
         {
             "name": "craftcms/cms",
-            "version": "5.6.0.2",
+            "version": "5.6.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/cms/zipball/40fb91c1dc33e83d9f9fbc22af43d88444bc501c",
-                "reference": "40fb91c1dc33e83d9f9fbc22af43d88444bc501c",
+                "url": "https://api.github.com/repos/craftcms/cms/zipball/b72d890fa98838ac5e2b537104bdf774e3826714",
+                "reference": "b72d890fa98838ac5e2b537104bdf774e3826714",
                 "shasum": ""
             },
             "require": {
@@ -645,7 +645,7 @@
                 "docs": "https://craftcms.com/docs/5.x/",
                 "rss": "https://github.com/craftcms/cms/releases.atom"
             },
-            "time": "2025-01-22T01:47:49+00:00"
+            "time": "2025-01-23T01:49:29+00:00"
         },
         {
             "name": "craftcms/flysystem",
@@ -1636,11 +1636,6 @@
         {
             "name": "illuminate/contracts",
             "version": "v10.48.26",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/contracts.git",
-                "reference": "f90663a69f926105a70b78060a31f3c64e2d1c74"
-            },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/illuminate/contracts/zipball/f90663a69f926105a70b78060a31f3c64e2d1c74",
@@ -1663,7 +1658,6 @@
                     "Illuminate\\Contracts\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1675,10 +1669,6 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "support": {
-                "issues": "https://github.com/laravel/framework/issues",
-                "source": "https://github.com/laravel/framework"
-            },
             "time": "2024-11-21T14:02:44+00:00"
         },
         {
@@ -6688,11 +6678,11 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
+    "platform": [],
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.2"
     },

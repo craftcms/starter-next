@@ -30,7 +30,7 @@ nav a:focus-visible {
   overflow: hidden;
 }
 
-.skip-link:focus {
+.skip-link:focus-visible {
   left: 10px;
   top: 10px;
   width: auto;

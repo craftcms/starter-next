@@ -13,25 +13,13 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }) {
-  let globals = {}
-  let pages = []
+  const data = await fetchGraphQL(GLOBALS_QUERY, {}, {
+    cache: 'force-cache',
+    next: { revalidate: 3600 }
+  })
 
-  try {
-    const data = await fetchGraphQL(GLOBALS_QUERY, {}, {
-      cache: 'force-cache',
-      next: { revalidate: 3600 }
-    })
-
-    if (!data) {
-      console.error('No data returned from globals query')
-    } else {
-      globals = data?.globalEntries?.[0] || {}
-      pages = data?.pagesEntries || []
-    }
-  } catch (error) {
-    console.error('Error fetching globals:', error)
-  }
-
+  const globals = data?.globalEntries?.[0] || {}
+  const pages = data?.pagesEntries || []
   const siteName = process.env.SITE_NAME || ''
 
   return (
@@ -45,7 +33,7 @@ export default async function RootLayout({ children }) {
         <SkipLink />
         <Header 
           siteName={siteName} 
-          logo={globals?.logo?.[0] || null}
+          logo={globals?.logo?.[0]}
           pages={pages}
         />
         <main id="main" className="min-h-screen">
@@ -54,9 +42,7 @@ export default async function RootLayout({ children }) {
             {children}
           </FlashProvider>
         </main>
-        <Footer 
-          address={globals?.address?.[0] || globals?.address || null} 
-        />
+        <Footer address={globals?.address?.[0] || globals?.address} />
       </body>
     </html>
   )

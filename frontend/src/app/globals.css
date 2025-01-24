@@ -21,3 +21,18 @@ nav a {
 nav a:focus-visible {
   @apply outline-none ring-2 ring-red-600 ring-offset-2 rounded-sm z-10;
 }
+
+.skip-link {
+  left: -1000px;
+  top: -1000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus-visible {
+  left: 10px;
+  top: 10px;
+  width: auto;
+  height: auto;
+}

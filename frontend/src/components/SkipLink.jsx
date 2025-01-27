@@ -7,22 +7,25 @@ export function SkipLink() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const myRef = useRef(null)
-  const hasPageBeenRendered = useRef(false);
+  const hasPageBeenRendered = useRef(false)
 
   useEffect(() => {
-    // Only focus skip link on route changes after initial page render
     if (hasPageBeenRendered.current) {
-      myRef.current.focus();
+      myRef.current.focus()
     }
     
-    hasPageBeenRendered.current = true;
+    hasPageBeenRendered.current = true
   }, [pathname, searchParams])
 
   return (
     <a
       href="#main"
       ref={myRef}
-      className="skip-link absolute rounded font-bold bg-red-600 text-slate-50 px-6 py-4"
+      className="
+        absolute -left-[1000px] -top-[1000px] w-px h-px overflow-hidden
+        focus-visible:left-[10px] focus-visible:top-[10px] focus-visible:w-auto focus-visible:h-auto
+        rounded font-bold bg-red-600 text-slate-50 px-6 py-4
+      "
     >
       Skip to main content
     </a>

@@ -25,5 +25,4 @@ return GeneralConfig::create()
         '@webroot' => dirname(__DIR__) . '/web',
         '@preview' => App::env('PRIMARY_SITE_URL'),
     ])
-    ->headlessMode(true)
-    ->allowedGraphqlOrigins([App::env('CRAFT_URL'), App::env('PRIMARY_SITE_URL')]);
+    ->headlessMode();

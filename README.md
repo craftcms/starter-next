@@ -1,4 +1,4 @@
-# Craft CMS + Next Starter
+# Craft CMS + Next.js Starter
 
 A minimal, production-ready starter for [Next.js 15](https://nextjs.org) and [Craft CMS](https://craftcms.com/) projects. Check out the [features](#key-features), or [dive right in](#quick-start)!
 
@@ -40,12 +40,12 @@ This project assumes you have our recommended development environment [DDEV](htt
 
     (The _Guestbook_ schema is automatically created with the appropriate permissions via [Project Config](https://craftcms.com/docs/5.x/system/project-config.html) as Craft is installed, but _tokens_ are unique to each environment.)
 
-1. Add required Next configuration:
+1. Add required Next.js configuration:
 
     - Copy `frontend/.env.example` to `frontend/.env`;
     - Populate the `GRAPHQL_TOKEN` variable with the token you just generated;
 
-1. Install front-end dependencies and start the Next development server:
+1. Install front-end dependencies and start the Next.js development server:
 
     ```bash
     ddev fe npm install
@@ -69,7 +69,7 @@ This project includes basic support for a handful of Craft’s best features, in
 
 ### GraphQL
 
-Next communicates with Craft’s built-in [GraphQL API](https://craftcms.com/docs/5.x/development/graphql.html) to query posts and pages, and create (or “mutate”) guestbook entries.
+Next.js communicates with Craft’s built-in [GraphQL API](https://craftcms.com/docs/5.x/development/graphql.html) to query posts and pages, and create (or “mutate”) guestbook entries.
 
 ### Live Preview
 
@@ -113,7 +113,7 @@ If you want to compress the GraphQL query feedback loop, open up the Craft contr
 
 ### Running on a Different Domain
 
-The DDEV configuration files shipped with this project use a specific pair of URLs for the Next front end and Craft back end:
+The DDEV configuration files shipped with this project use a specific pair of URLs for the Next.js front end and Craft back end:
 
 - **Front end**: `https://starter-next.ddev.site`
 - **Back end**: `https://api.starter-next.ddev.com`
@@ -142,7 +142,7 @@ Your production configuration will probably look different—as long as Next.js 
 > [!TIP]
 > Always validate your CORS policy when deploying projects that make cross-domain requests!
 
-The _path_ Next uses to fetch data via GraphQL must be kept in sync between `backend/config/routes.php` and the `apiBasePath` variable in `frontend/src/lib/graphql.js`.
+The _path_ Next.js uses to fetch data via GraphQL must be kept in sync between `backend/config/routes.php` and the `apiBasePath` variable in `frontend/src/lib/graphql.js`.
 
 ## Contributing
 

@@ -5,24 +5,23 @@ export const dynamic = 'force-static'
 export const revalidate = 3600
 
 const transform = (data) => {
-  if (!data?.entry) {
+
+  if (!data?.entries?.[0]) {
+    console.log('No entries found in data')
     return null
   }
   
+  const entry = data.entries[0]
   return {
-    ...data.entry,
-    title: data.entry.title || '',
-    pageSubheading: data.entry.pageSubheading || '',
-    pageContent: data.entry.pageContent || '',
-    image: data.entry.image || []
+    title: entry.title || '',
+    pageSubheading: entry.pageSubheading || '',
+    pageContent: entry.pageContent || '',
+    image: entry.image || [],
   }
 }
 
 export default createPage(
   HOME_QUERY,
   transform,
-  null,
-  {
-    variables: () => ({})
-  }
+  null
 )

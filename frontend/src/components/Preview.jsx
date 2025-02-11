@@ -1,38 +1,36 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePreview } from '../lib/preview'
+import { useSearchParams } from 'next/navigation'
 import { fetchGraphQL } from '../lib/graphql'
 import { Content } from './Content'
 
-export function Preview({ initialData, query, variables = {}, CustomContent }) {
-  const { previewToken } = usePreview()
-  const [data, setData] = useState(initialData)
+export function Preview({ 
+  initialData, 
+  transformedData,
+  query, 
+  variables = {}, 
+  CustomContent 
+}) {
+  const searchParams = useSearchParams()
+  const [data, setData] = useState(transformedData || initialData)
+  
+  const token = searchParams?.get('token')
+  const craftPreview = searchParams?.get('x-craft-live-preview')
+  const isPreview = Boolean(token && craftPreview)
 
   useEffect(() => {
-    if (previewToken) {
+    if (isPreview) {
       fetchGraphQL(query, variables, {
         preview: true,
-        token: previewToken,
+        token,
       }).then(newData => {
         console.log('Preview data updated:', newData)
         setData(newData)
       })
     }
-  }, [previewToken, query, variables])
-
-  const pageData = data?.blogPostsEntries?.[0] || data?.entry || data?.entries?.[0] || {
-    title: 'New Entry',
-    pageSubheading: '',
-    pageContent: '',
-    image: [],
-    authorName: '',
-    postDate: '',
-    category: null,
-    next: null,
-    prev: null
-  }
+  }, [isPreview, token, query, variables])
 
   const ContentComponent = CustomContent || Content
-  return <ContentComponent pageData={pageData} initialData={data} />
+  return <ContentComponent pageData={data} />
 } 

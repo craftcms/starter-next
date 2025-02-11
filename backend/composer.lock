@@ -504,11 +504,16 @@
         },
         {
             "name": "craftcms/cloud",
-            "version": "2.7.2",
+            "version": "2.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/craftcms/cloud-extension-yii2.git",
+                "reference": "4030a68df8c96fd481213e72959c7d980663818e"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/cloud-extension-yii2/zipball/b6d6d70aefbb9cdc8ee26188afda6578a9650c5a",
-                "reference": "b6d6d70aefbb9cdc8ee26188afda6578a9650c5a",
+                "url": "https://api.github.com/repos/craftcms/cloud-extension-yii2/zipball/4030a68df8c96fd481213e72959c7d980663818e",
+                "reference": "4030a68df8c96fd481213e72959c7d980663818e",
                 "shasum": ""
             },
             "require": {
@@ -525,6 +530,10 @@
                 "yiisoft/yii2-queue": "^2.3.7",
                 "yiisoft/yii2-redis": "^2.0"
             },
+            "require-dev": {
+                "craftcms/ecs": "dev-main",
+                "craftcms/phpstan": "dev-main"
+            },
             "type": "yii2-extension",
             "extra": {
                 "bootstrap": "craft\\cloud\\Module"
@@ -537,7 +546,12 @@
                     "craft\\cloud\\": "src/"
                 }
             },
-            "time": "2025-01-14T17:45:41+00:00"
+            "notification-url": "https://packagist.org/downloads/",
+            "support": {
+                "issues": "https://github.com/craftcms/cloud-extension-yii2/issues",
+                "source": "https://github.com/craftcms/cloud-extension-yii2/tree/2.9.0"
+            },
+            "time": "2025-02-09T20:20:51+00:00"
         },
         {
             "name": "craftcms/cms",

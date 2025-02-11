@@ -13,7 +13,6 @@ export function Content({ pageData = {} }) {
 
   return (
     <div>
-      {/* Hero Image */}
       {image?.length > 0 && (
         <figure>
           <Image image={image[0]} />

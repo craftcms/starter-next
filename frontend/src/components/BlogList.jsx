@@ -6,7 +6,7 @@ import { BLOG_QUERY } from '../queries/blog'
 import { Content } from './Content'
 import { Teaser } from './Teaser'
 import { Pagination } from './Pagination'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { notFound } from 'next/navigation'
 
 const ITEMS_PER_PAGE = 4
@@ -16,7 +16,6 @@ export default function BlogList({ initialData }) {
   const [error, setError] = useState(null)
   const [data, setData] = useState(initialData)
   const searchParams = useSearchParams()
-  const router = useRouter()
   
   const currentPage = parseInt(searchParams.get('page')) || 1
   

@@ -1,9 +1,8 @@
 import { notFound } from 'next/navigation'
-import { fetchGraphQL } from '../../lib/graphql'
+import { createPage } from '../../lib/createPage'
 import { GUESTBOOK_QUERY } from '../../queries/guestbook'
 import { Content } from '../../components/Content'
 import { GuestbookInteractive } from '../../components/GuestbookInteractive'
-import { PagePreviewWrapper } from '../../components/PagePreviewWrapper'
 
 export const dynamic = 'force-static'
 export const revalidate = 3600
@@ -23,22 +22,20 @@ const transform = (data) => {
   }
 }
 
-export default async function Page({ searchParams }) {
-  const data = await fetchGraphQL(GUESTBOOK_QUERY, {}, {
-    preview: Boolean(
-      searchParams?.token && 
-      searchParams?.['x-craft-live-preview']
-    )
-  })
-  
-  const pageData = transform(data)
+const CustomContent = ({ pageData }) => (
+  <>
+    <Content pageData={pageData} />
+    <div className="mt-8">
+      <GuestbookInteractive authorId={pageData.authorId} />
+    </div>
+  </>
+)
 
-  return (
-    <>
-      <Content pageData={pageData} />
-      <div className="mt-8">
-        <GuestbookInteractive authorId={pageData.authorId} />
-      </div>
-    </>
-  )
-}
+export default createPage(
+  GUESTBOOK_QUERY,
+  transform,
+  CustomContent,
+  {
+    variables: () => ({})
+  }
+)

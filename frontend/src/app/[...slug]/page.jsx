@@ -19,4 +19,13 @@ const transform = (data) => {
   }
 }
 
-export default createPage(PAGE_QUERY, transform)
+export default createPage(
+  PAGE_QUERY, 
+  transform,
+  null,
+  {
+    variables: ({ params }) => ({
+      uri: params?.slug?.join('/') || ''
+    })
+  }
+)

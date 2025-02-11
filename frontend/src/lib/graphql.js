@@ -18,7 +18,6 @@ export async function fetchGraphQL(query, variables = {}, options = DEFAULT_OPTI
       'Accept': 'application/json',
     }
 
-    // Handle authentication
     if (options.private || options.preview) {
       const token = options.token || process.env.GRAPHQL_TOKEN
       if (!token) {
@@ -27,7 +26,6 @@ export async function fetchGraphQL(query, variables = {}, options = DEFAULT_OPTI
       headers['Authorization'] = `Bearer ${token}`
     }
 
-    // Add preview token if available
     if (options.preview && options.token) {
       headers['X-Craft-Token'] = options.token
     }

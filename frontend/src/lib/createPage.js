@@ -1,74 +1,67 @@
 import { notFound } from 'next/navigation'
-import { PagePreviewWrapper } from '../components/PagePreviewWrapper'
 import { fetchGraphQL } from './graphql'
-
-const ENTRIES_PER_PAGE = 4
+import { Preview } from '../components/Preview'
+import { Content } from '../components/Content'
 
 export function createPage(query, transform, CustomContent, options = {}) {
   return async function Page({ params, searchParams }) {
+
+    const isPreview = Boolean(
+      searchParams?.token && 
+      searchParams?.['x-craft-live-preview']
+    )
+
     try {
-      const resolvedParams = await params
-      const resolvedSearchParams = await searchParams
-      
-      const { slug } = resolvedParams
-      const uri = Array.isArray(slug) ? slug.join('/') : slug || ''
-      
-      const variables = {
-        uri,
-        ...options.variables
-      }
+      const variables = typeof options.variables === 'function' 
+        ? options.variables({ params }) 
+        : options.variables || {}
 
       const data = await fetchGraphQL(query, variables, {
-        preview: Boolean(
-          resolvedSearchParams?.token && 
-          resolvedSearchParams?.['x-craft-live-preview']
-        ),
-        revalidate: 3600
+        preview: isPreview,
+        token: searchParams?.token
       })
 
       if (!data) {
-        notFound()
+        console.error('No data returned from GraphQL')
+        return notFound()
       }
 
-      // Transform the data on the server side
-      let transformedData
-      try {
-        transformedData = transform ? transform(data) : data?.entry || data?.entries?.[0]
-        if (!transformedData) {
-          notFound()
-        }
-      } catch (error) {
-        console.error('Transform Error:', error)
-        notFound()
-      }
+      const transformedData = transform ? transform(data) : data
 
-      const pageTitle = transformedData.title
-      const isBlog = data?.entry?.sectionHandle === 'blogPosts' || data?.entries?.[0]?.sectionHandle === 'blogPosts'
-      const isGuestbook = data?.entry?.sectionHandle === 'guestbook' || data?.entries?.[0]?.sectionHandle === 'guestbook'
-      
-      const title = (isBlog || isGuestbook) && parseInt(String(resolvedSearchParams?.page || '1')) > 1 
-        ? `${pageTitle} (Page ${parseInt(String(resolvedSearchParams?.page || '1'))})` 
-        : pageTitle
-
-      const metadata = {
-        title: `${title} | ${process.env.SITE_NAME}`
-      }
-
-      return (
-        <>
-          <title>{metadata.title}</title>
-          <PagePreviewWrapper 
-            data={data}
+      if (isPreview) {
+        return (
+          <Preview 
+            initialData={data}
             transformedData={transformedData}
             query={query}
             variables={variables}
             CustomContent={CustomContent}
           />
-        </>
-      )
+        )
+      }
+
+      if (!transformedData) {
+        console.error('Transform returned null')
+        return notFound()
+      }
+
+      const ContentComponent = CustomContent || Content
+      return <ContentComponent pageData={transformedData} />
+
     } catch (error) {
       console.error('Page Error:', error)
-      notFound()
+      if (isPreview) {
+        return (
+          <Preview 
+            initialData={{}}
+            transformedData={null}
+            query={query}
+            variables={variables}
+            CustomContent={CustomContent}
+          />
+        )
+      }
+      return notFound()
     }
   }
 } 

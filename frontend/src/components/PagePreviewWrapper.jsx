@@ -6,17 +6,26 @@ import { Content } from './Content'
 
 export function PagePreviewWrapper({ data, transformedData, query, variables, CustomContent }) {
   const { isPreview } = usePreview()
+  const isPreviewMode = isPreview()
 
-  if (isPreview()) {
+  console.log('PagePreviewWrapper:', {
+    isPreviewMode,
+    hasData: Boolean(data),
+    hasTransformedData: Boolean(transformedData)
+  })
+
+  if (isPreviewMode) {
     return (
       <Preview 
         initialData={data} 
         query={query}
         variables={variables}
+        CustomContent={CustomContent}
       />
     )
   }
 
+  // In normal mode, require transformed data
   if (!transformedData) return null
 
   const ContentComponent = CustomContent || Content

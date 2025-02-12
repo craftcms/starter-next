@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { createPage } from '../../lib/createPage'
+import { fetchGraphQL } from '../../lib/graphql'
 import { GUESTBOOK_QUERY } from '../../queries/guestbook'
 import { Content } from '../../components/Content'
 import { GuestbookInteractive } from '../../components/GuestbookInteractive'
@@ -22,20 +22,22 @@ const transform = (data) => {
   }
 }
 
-const CustomContent = ({ pageData }) => (
-  <>
-    <Content pageData={pageData} />
-    <div className="mt-8">
-      <GuestbookInteractive authorId={pageData.authorId} />
-    </div>
-  </>
-)
+export default async function Page({ searchParams }) {
+  const data = await fetchGraphQL(GUESTBOOK_QUERY, {}, {
+    preview: Boolean(
+      searchParams?.token && 
+      searchParams?.['x-craft-live-preview']
+    )
+  })
+  
+  const pageData = transform(data)
 
-export default createPage(
-  GUESTBOOK_QUERY,
-  transform,
-  CustomContent,
-  {
-    variables: () => ({})
-  }
-)
+  return (
+    <>
+      <Content pageData={pageData} />
+      <div className="mt-8">
+        <GuestbookInteractive authorId={pageData.authorId} />
+      </div>
+    </>
+  )
+}

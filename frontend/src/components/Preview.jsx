@@ -7,30 +7,39 @@ import { Content } from './Content'
 
 export function Preview({ 
   initialData, 
-  transformedData,
   query, 
   variables = {}, 
+  transform,
   CustomContent 
 }) {
   const searchParams = useSearchParams()
-  const [data, setData] = useState(transformedData || initialData)
+  const [data, setData] = useState(initialData)
   
   const token = searchParams?.get('token')
   const craftPreview = searchParams?.get('x-craft-live-preview')
-  const isPreview = Boolean(token && craftPreview)
+  const isPreviewMode = Boolean(token && craftPreview)
 
   useEffect(() => {
-    if (isPreview) {
+    if (token && isPreviewMode) {
       fetchGraphQL(query, variables, {
         preview: true,
         token,
+        headers: {
+          'X-Craft-Preview': '1',
+          'X-Craft-Live-Preview': '1',
+          'X-Craft-Token': token
+        }
       }).then(newData => {
-        console.log('Preview data updated:', newData)
-        setData(newData)
+        if (newData) {
+          const transformedData = transform ? transform(newData) : newData
+          setData(transformedData)
+        }
       })
     }
-  }, [isPreview, token, query, variables])
+  }, [token, query, variables, transform, isPreviewMode])
 
   const ContentComponent = CustomContent || Content
-  return <ContentComponent pageData={data} />
+  const pageData = data?.entry || data?.entries?.[0] || data
+  
+  return <ContentComponent pageData={pageData} />
 } 

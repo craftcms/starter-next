@@ -5,9 +5,7 @@ export const dynamic = 'force-static'
 export const revalidate = 3600
 
 const transform = (data) => {
-  if (!data?.blogPostsEntries?.[0]) {
-    return null
-  }
+  if (!data?.blogPostsEntries?.[0]) return null
   
   const post = data.blogPostsEntries[0]
   return {
@@ -19,13 +17,8 @@ const transform = (data) => {
   }
 }
 
-export default createPage(
-  BLOG_POSTS_QUERY,
-  transform,
-  null,
-  {
-    variables: ({ params }) => ({
-      slug: [params?.slug].filter(Boolean)
-    })
-  }
-)
+export default createPage(BLOG_POSTS_QUERY, transform, null, {
+  variables: ({ params }) => ({
+    slug: [params?.slug].filter(Boolean)
+  })
+})

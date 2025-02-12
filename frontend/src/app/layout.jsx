@@ -31,11 +31,7 @@ export default async function RootLayout({ children }) {
       </head>
       <body>
         <SkipLink />
-        <Header 
-          siteName={siteName} 
-          logo={globals?.logo?.[0]}
-          pages={pages}
-        />
+        <Header siteName={siteName} logo={globals?.logo?.[0]} pages={pages} />
         <main id="main" className="min-h-screen">
           <FlashProvider>
             <Alert />

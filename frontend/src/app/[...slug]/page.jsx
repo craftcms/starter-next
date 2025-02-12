@@ -6,9 +6,7 @@ export const dynamic = 'force-static'
 export const revalidate = 3600
 
 const transform = (data) => {
-  if (!data?.entry) {
-    return notFound()
-  }
+  if (!data?.entry) return notFound()
   
   return {
     ...data.entry,
@@ -19,13 +17,8 @@ const transform = (data) => {
   }
 }
 
-export default createPage(
-  PAGE_QUERY, 
-  transform,
-  null,
-  {
-    variables: ({ params }) => ({
-      uri: params?.slug?.join('/') || ''
-    })
-  }
-)
+export default createPage(PAGE_QUERY, transform, null, {
+  variables: ({ params }) => ({
+    uri: params?.slug?.join('/') || ''
+  })
+})

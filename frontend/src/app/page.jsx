@@ -5,11 +5,7 @@ export const dynamic = 'force-static'
 export const revalidate = 3600
 
 const transform = (data) => {
-
-  if (!data?.entries?.[0]) {
-    console.log('No entries found in data')
-    return null
-  }
+  if (!data?.entries?.[0]) return null
   
   const entry = data.entries[0]
   return {
@@ -20,8 +16,4 @@ const transform = (data) => {
   }
 }
 
-export default createPage(
-  HOME_QUERY,
-  transform,
-  null
-)
+export default createPage(HOME_QUERY, transform, null)

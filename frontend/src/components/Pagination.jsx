@@ -3,17 +3,14 @@
 import { useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-export function Pagination({ currentPage, totalPages, pageTitle }) {
+export function Pagination({ currentPage, totalPages, pageTitle, siteName }) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    if (typeof document === 'undefined') return
-
-    const baseTitle = pageTitle || document.title.split('|')[0].trim()
     const pageSuffix = currentPage > 1 ? ` (Page ${currentPage})` : ''
-    document.title = `${baseTitle}${pageSuffix} | ${process.env.SITE_NAME}`
-  }, [currentPage, pageTitle])
+    document.title = `${pageTitle}${pageSuffix} | ${siteName}`
+  }, [currentPage, pageTitle, siteName])
 
   const updateCurrentPage = (newPage) => {
     const params = new URLSearchParams(searchParams)

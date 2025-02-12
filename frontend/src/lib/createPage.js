@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import { fetchGraphQL } from './graphql'
 import { Preview } from '../components/Preview'
-import { Content } from '../components/Content'
 
 export function createPage(query, transform, CustomContent, options = {}) {
   return async function Page({ params, searchParams }) {
@@ -20,21 +19,13 @@ export function createPage(query, transform, CustomContent, options = {}) {
       const data = await fetchGraphQL(query, variables, {
         preview: Boolean(
           resolvedSearchParams?.token && 
-          resolvedSearchParams?.['x-craft-live-preview']
-        ),
-        token: resolvedSearchParams?.token
+          resolvedSearchParams['x-craft-live-preview']
+        )
       })
 
-      if (!data) {
-        notFound()
-      }
-
-      // Transform the data on the server side
       const transformedData = transform ? transform(data) : data?.entry || data?.entries?.[0]
       
-      if (!transformedData) {
-        notFound()
-      }
+      if (!transformedData) notFound()
 
       return (
         <Preview 
@@ -44,7 +35,6 @@ export function createPage(query, transform, CustomContent, options = {}) {
           CustomContent={CustomContent}
         />
       )
-
     } catch (error) {
       console.error('Page Error:', error)
       notFound()

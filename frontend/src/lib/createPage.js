@@ -1,6 +1,22 @@
 import { fetchGraphQL } from './graphql'
 import { Preview } from '../components/Preview'
 
+function extractFirstEntry(data) {
+  if (!data) return {}
+  
+  const arrayKey = Object.keys(data).find(key => Array.isArray(data[key]))
+  
+  if (arrayKey && data[arrayKey]?.[0]) {
+    return data[arrayKey][0]
+  }
+  
+  if (data.entry) {
+    return data.entry
+  }
+  
+  return data
+}
+
 export function createPage(query, transform, CustomContent, options = {}) {
   return async function Page({ params, searchParams }) {
     try {
@@ -24,12 +40,7 @@ export function createPage(query, transform, CustomContent, options = {}) {
         preview: isPreview
       })
 
-      const transformedData = transform ? transform(data, isPreview) : (
-        data?.entry || 
-        data?.entries?.[0] || 
-        data?.blogPostsEntries?.[0] || 
-        data
-      )
+      const transformedData = transform ? transform(data) : extractFirstEntry(data)
 
       return (
         <Preview 

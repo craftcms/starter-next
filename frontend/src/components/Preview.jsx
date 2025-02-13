@@ -4,12 +4,27 @@ import { useEffect, useState } from 'react'
 import { fetchGraphQL } from '../lib/graphql'
 import { Content } from './Content'
 
+function extractFirstEntry(data) {
+  if (!data) return {}
+  
+  const arrayKey = Object.keys(data).find(key => Array.isArray(data[key]))
+  
+  if (arrayKey && data[arrayKey]?.[0]) {
+    return data[arrayKey][0]
+  }
+  
+  if (data.entry) {
+    return data.entry
+  }
+  
+  return data
+}
+
 export function Preview({ 
   initialData, 
   query, 
   variables = {}, 
-  CustomContent,
-  transform
+  CustomContent
 }) {
   const [data, setData] = useState(initialData)
   
@@ -19,25 +34,17 @@ export function Preview({
     const isPreview = searchParams.has('x-craft-live-preview')
 
     if (isPreview && token) {
-      console.log('Fetching preview data')
       fetchGraphQL(query, variables, {
         preview: true,
         token
       }).then(newData => {
         if (newData) {
-          const transformedData = transform ? transform(newData, true) : newData
-          console.log('Preview data transformed:', transformedData)
-
-          const finalData = 
-            transformedData.blogPostsEntries?.[0] || 
-            transformedData.entries?.[0] || 
-            transformedData.entry || 
-            transformedData
-          setData(finalData)
+          const transformedData = extractFirstEntry(newData)
+          setData(transformedData)
         }
       })
     }
-  }, [query, variables, transform])
+  }, [query, variables])
 
   const ContentComponent = CustomContent || Content
   return <ContentComponent pageData={data} />

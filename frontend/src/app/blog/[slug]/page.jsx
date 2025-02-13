@@ -4,16 +4,22 @@ import { BLOG_POSTS_QUERY } from '../../../queries/blogPosts'
 export const dynamic = 'force-static'
 export const revalidate = 3600
 
-const transform = (data) => {
-  if (!data?.blogPostsEntries?.[0]) return null
+const transform = (data, isPreview = false) => {
+  const entry = data?.entry || data?.blogPostsEntries?.[0] || {}
   
-  const post = data.blogPostsEntries[0]
   return {
-    title: post.title || '',
-    pageSubheading: post.pageSubheading || '',
-    pageContent: post.pageContent || '',
-    image: post.image ? [post.image] : [],
-    postDate: post.postDate || '',
+    title: entry.title || '',
+    pageSubheading: entry.pageSubheading || '',
+    pageContent: entry.pageContent || '',
+    authorName: entry.authorName || '',
+    authorId: entry.authorId || '',
+    sectionHandle: entry.sectionHandle || '',
+    postDate: entry.postDate || '',
+    image: entry.image ? [entry.image] : undefined,
+    next: entry.next || null,
+    prev: entry.prev || null,
+    category: entry.category || null,
+    ...entry
   }
 }
 

@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { fetchGraphQL } from '../lib/graphql'
 import { Content } from './Content'
 
@@ -9,37 +8,41 @@ export function Preview({
   initialData, 
   query, 
   variables = {}, 
-  transform,
-  CustomContent 
+  CustomContent,
+  transform
 }) {
-  const searchParams = useSearchParams()
+  console.log('Preview mounted with initialData:', initialData)
   const [data, setData] = useState(initialData)
   
-  const token = searchParams?.get('token')
-  const craftPreview = searchParams?.get('x-craft-live-preview')
-  const isPreviewMode = Boolean(token && craftPreview)
-
   useEffect(() => {
-    if (token && isPreviewMode) {
+    console.log('Preview effect running')
+    const searchParams = new URLSearchParams(window.location.search)
+    const token = searchParams.get('token')
+    const isPreview = searchParams.has('x-craft-live-preview')
+    
+    console.log('Preview params:', { token, isPreview })
+
+    if (isPreview && token) {
+      console.log('Fetching preview data')
       fetchGraphQL(query, variables, {
         preview: true,
-        token,
-        headers: {
-          'X-Craft-Preview': '1',
-          'X-Craft-Live-Preview': '1',
-          'X-Craft-Token': token
-        }
+        token
       }).then(newData => {
         if (newData) {
-          const transformedData = transform ? transform(newData) : newData
-          setData(transformedData)
+          // First transform the raw GraphQL response
+          const transformedData = transform ? transform(newData, true) : newData
+          console.log('Preview data transformed:', transformedData)
+          
+          // Then extract the first entry if it's an array
+          const finalData = transformedData.blogPostsEntries?.[0] || transformedData.entry || transformedData
+          console.log('Preview data final:', finalData)
+          setData(finalData)
         }
       })
     }
-  }, [token, query, variables, transform, isPreviewMode])
+  }, [query, variables, transform])
 
+  console.log('Preview rendering with data:', data)
   const ContentComponent = CustomContent || Content
-  const pageData = data?.entry || data?.entries?.[0] || data
-  
-  return <ContentComponent pageData={pageData} />
+  return <ContentComponent pageData={data} />
 } 

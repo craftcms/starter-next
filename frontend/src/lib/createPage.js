@@ -24,7 +24,12 @@ export function createPage(query, transform, CustomContent, options = {}) {
         preview: isPreview
       })
 
-      const transformedData = transform ? transform(data, isPreview) : data?.entry || data?.entries?.[0]
+      const transformedData = transform ? transform(data, isPreview) : (
+        data?.entry || 
+        data?.entries?.[0] || 
+        data?.blogPostsEntries?.[0] || 
+        data
+      )
 
       return (
         <Preview 

@@ -1,23 +1,51 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePreview } from '../lib/preview'
 import { fetchGraphQL } from '../lib/graphql'
 import { Content } from './Content'
 
-export function Preview({ initialData, query, variables = {} }) {
-  const { previewToken } = usePreview()
-  const [data, setData] = useState(initialData)
+function extractFirstEntry(data) {
+  if (!data) return {}
+  
+  const arrayKey = Object.keys(data).find(key => Array.isArray(data[key]))
+  
+  if (arrayKey && data[arrayKey]?.[0]) {
+    return data[arrayKey][0]
+  }
+  
+  if (data.entry) {
+    return data.entry
+  }
+  
+  return data
+}
 
+export function Preview({ 
+  initialData, 
+  query, 
+  variables = {}, 
+  CustomContent
+}) {
+  const [data, setData] = useState(initialData)
+  
   useEffect(() => {
-    if (previewToken) {
+    const searchParams = new URLSearchParams(window.location.search)
+    const token = searchParams.get('token')
+    const isPreview = searchParams.has('x-craft-live-preview')
+
+    if (isPreview && token) {
       fetchGraphQL(query, variables, {
         preview: true,
-        token: previewToken,
-      }).then(newData => setData(newData))
+        token
+      }).then(newData => {
+        if (newData) {
+          const transformedData = extractFirstEntry(newData)
+          setData(transformedData)
+        }
+      })
     }
-  }, [previewToken, query, variables])
+  }, [query, variables])
 
-  const pageData = data?.blogPostsEntries?.[0] || data?.entry || data?.entries?.[0] || {}
-  return <Content pageData={pageData} />
+  const ContentComponent = CustomContent || Content
+  return <ContentComponent pageData={data} />
 } 

@@ -11,9 +11,7 @@ export function FlashProvider({ children }) {
   const addFlash = useCallback((message, level = 'info') => {
     const id = Date.now()
     setFlashes(prev => [...prev, { id, message, level }])
-    setTimeout(() => {
-      setFlashes(prev => prev.filter(flash => flash.id !== id))
-    }, FLASH_DURATION)
+    setTimeout(() => setFlashes(prev => prev.filter(flash => flash.id !== id)), FLASH_DURATION)
   }, [])
 
   const removeFlash = useCallback((id) => {
@@ -29,8 +27,6 @@ export function FlashProvider({ children }) {
 
 export function useFlashes() {
   const context = useContext(FlashContext)
-  if (!context) {
-    throw new Error('useFlashes must be used within a FlashProvider')
-  }
+  if (!context) throw new Error('useFlashes must be used within a FlashProvider')
   return context
 }

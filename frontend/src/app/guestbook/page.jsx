@@ -3,15 +3,12 @@ import { fetchGraphQL } from '../../lib/graphql'
 import { GUESTBOOK_QUERY } from '../../queries/guestbook'
 import { Content } from '../../components/Content'
 import { GuestbookInteractive } from '../../components/GuestbookInteractive'
-import { PagePreviewWrapper } from '../../components/PagePreviewWrapper'
 
 export const dynamic = 'force-static'
 export const revalidate = 3600
 
 const transform = (data) => {
-  if (!data?.guestbookEntries?.[0]) {
-    return notFound()
-  }
+  if (!data?.guestbookEntries?.[0]) return notFound()
   
   const entry = data.guestbookEntries[0]
   return {
@@ -25,10 +22,7 @@ const transform = (data) => {
 
 export default async function Page({ searchParams }) {
   const data = await fetchGraphQL(GUESTBOOK_QUERY, {}, {
-    preview: Boolean(
-      searchParams?.token && 
-      searchParams?.['x-craft-live-preview']
-    )
+    preview: Boolean(searchParams?.token && searchParams?.['x-craft-live-preview'])
   })
   
   const pageData = transform(data)

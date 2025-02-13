@@ -12,18 +12,12 @@ export default async function BlogPage({ searchParams }) {
   const currentPage = parseInt(searchParams?.page) || 1
   
   try {
-    const initialData = await fetchGraphQL(
-      BLOG_QUERY,
-      {
-        limit: ITEMS_PER_PAGE,
-        offset: (currentPage - 1) * ITEMS_PER_PAGE
-      }
-    )
+    const initialData = await fetchGraphQL(BLOG_QUERY, {
+      limit: ITEMS_PER_PAGE,
+      offset: (currentPage - 1) * ITEMS_PER_PAGE
+    })
     
-    if (!initialData?.blogEntries?.[0]) {
-      notFound()
-    }
-
+    if (!initialData?.blogEntries?.[0]) notFound()
     return <BlogList initialData={initialData} />
   } catch (error) {
     console.error('Blog Error:', error)

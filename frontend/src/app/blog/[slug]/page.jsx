@@ -1,28 +1,30 @@
-import { notFound } from 'next/navigation'
 import { createPage } from '../../../lib/createPage'
 import { BLOG_POSTS_QUERY } from '../../../queries/blogPosts'
 
 export const dynamic = 'force-static'
 export const revalidate = 3600
 
-const transform = (data) => {
-  if (!data?.blogPostsEntries?.[0]) {
-    return notFound()
-  }
+const transform = (data, isPreview = false) => {
+  const entry = data?.entry || data?.blogPostsEntries?.[0] || {}
   
-  const post = data.blogPostsEntries[0]
   return {
-    ...post,
-    title: post.title || '',
-    pageSubheading: post.pageSubheading || '',
-    pageContent: post.pageContent || '',
-    image: post.image || [],
-    authorName: post.authorName,
-    postDate: post.postDate,
-    category: post.category,
-    next: post.next,
-    prev: post.prev
+    title: entry.title || '',
+    pageSubheading: entry.pageSubheading || '',
+    pageContent: entry.pageContent || '',
+    authorName: entry.authorName || '',
+    authorId: entry.authorId || '',
+    sectionHandle: entry.sectionHandle || '',
+    postDate: entry.postDate || '',
+    image: entry.image ? [entry.image] : undefined,
+    next: entry.next || null,
+    prev: entry.prev || null,
+    category: entry.category || null,
+    ...entry
   }
 }
 
-export default createPage(BLOG_POSTS_QUERY, transform)
+export default createPage(BLOG_POSTS_QUERY, transform, null, {
+  variables: ({ params }) => ({
+    slug: [params?.slug].filter(Boolean)
+  })
+})

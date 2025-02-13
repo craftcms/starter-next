@@ -2,19 +2,23 @@ import { Image } from './Image'
 import Link from 'next/link'
 
 export function Content({ pageData = {} }) {
+  // Early return with empty div if no pageData
+  if (!pageData) {
+    return <div />
+  }
+
   const {
-    title,
-    pageSubheading,
-    pageContent,
-    image,
-    ancestors,
-    children
+    title = '',
+    pageSubheading = '',
+    pageContent = '',
+    image = [],
+    ancestors = [],
+    children = []
   } = pageData
 
   return (
     <div>
-      {/* Hero Image */}
-      {image?.length > 0 && (
+      {image?.[0] && (
         <figure>
           <Image image={image[0]} />
         </figure>
@@ -49,7 +53,7 @@ export function Content({ pageData = {} }) {
         </section>
       )}
       
-      {children && children.length > 0 && (
+      {children?.length > 0 && (
         <footer>
           <div className="container mx-auto py-12 px-2">
             <h3 className="font-bold text-3xl mb-4">Children</h3>

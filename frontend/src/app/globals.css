@@ -1,6 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+@source "../../../backend/templates";
+@source "./safelist.txt";
+
 
 @layer base {
   :focus-visible {
@@ -14,6 +19,7 @@
     @apply outline-none ring-2 ring-red-600 ring-offset-2 rounded;
   }
 }
+
 nav a {
   @apply relative;
 }

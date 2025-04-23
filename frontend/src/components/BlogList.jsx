@@ -2,9 +2,9 @@
 
 import { useEffect, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Content } from '../Content'
-import { BlogTeaser } from './BlogTeaser'
-import { Pagination } from '../Pagination'
+import { Content } from './Content'
+import { BlogTeaser } from './Teaser'
+import { Pagination } from './Pagination'
 
 export default function BlogList({ data, currentPage, totalPages, baseUrl }) {
   const router = useRouter()

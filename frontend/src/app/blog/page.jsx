@@ -1,6 +1,6 @@
 import { fetchGraphQL } from '../../lib/graphql'
 import { BLOG_QUERY } from '../../queries/blog'
-import BlogList from '../../components/blog/BlogList'
+import BlogList from '../../components/BlogList'
 
 const ITEMS_PER_PAGE = 4
 

@@ -27,10 +27,12 @@ export function createPage(query, transform, CustomContent, options = {}) {
       const { slug } = resolvedParams
       const uri = Array.isArray(slug) ? slug.join('/') : slug || ''
       
-      const variables = {
-        uri,
-        ...options.variables
-      }
+      const varsFromOptions = options.variables
+        ? (typeof options.variables === 'function'
+            ? options.variables({ params: resolvedParams, searchParams: resolvedSearchParams })
+            : options.variables)
+        : {}
+      const variables = { uri, ...varsFromOptions }
 
       const isPreview = Boolean(
         resolvedSearchParams?.token && 

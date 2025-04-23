@@ -2,6 +2,9 @@ import { fetchGraphQL } from '../../lib/graphql'
 import { BLOG_QUERY } from '../../queries/blog'
 import BlogList from '../../components/blog/BlogList'
 
+export const dynamic = 'force-static'
+export const revalidate = 3600
+
 const ITEMS_PER_PAGE = 4
 
 async function getData(page = 1) {
@@ -41,6 +44,4 @@ export default async function BlogPage({ params }) {
     totalPages={data.totalPages}
     baseUrl="/blog"
   />
-}
-
-export const revalidate = 3600 
+} 

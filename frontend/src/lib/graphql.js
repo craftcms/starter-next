@@ -1,7 +1,9 @@
 const DEFAULT_OPTIONS = {
   private: false,
   preview: false,
-  token: null
+  token: null,
+  cache: 'force-cache',
+  next: { revalidate: 3600 }
 }
 
 export async function fetchGraphQL(query, variables = {}, options = DEFAULT_OPTIONS) {
@@ -26,6 +28,8 @@ export async function fetchGraphQL(query, variables = {}, options = DEFAULT_OPTI
       headers,
       body: JSON.stringify({ query, variables }),
       credentials: 'include',
+      cache: options.cache,
+      next: options.next
     })
 
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)

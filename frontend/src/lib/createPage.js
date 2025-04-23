@@ -37,7 +37,9 @@ export function createPage(query, transform, CustomContent, options = {}) {
       )
 
       const data = await fetchGraphQL(query, variables, {
-        preview: isPreview
+        preview: isPreview,
+        cache: isPreview ? 'no-store' : 'force-cache',
+        next: { revalidate: isPreview ? 0 : 3600 }
       })
 
       const transformedData = transform ? transform(data) : extractFirstEntry(data)

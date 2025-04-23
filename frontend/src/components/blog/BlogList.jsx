@@ -32,7 +32,8 @@ export default function BlogList({ data, currentPage, totalPages, baseUrl }) {
 
   const handlePageChange = (page) => {
     startTransition(() => {
-      router.push(`${baseUrl}?page=${page}`)
+      const href = `${baseUrl}?page=${page}`
+      router.push(href)
     })
   }
 

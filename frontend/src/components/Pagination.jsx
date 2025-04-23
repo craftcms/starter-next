@@ -1,12 +1,6 @@
 'use client'
 
-export function Pagination({ 
-  currentPage, 
-  totalPages, 
-  onPageChange,
-  pageTitle,
-  siteName 
-}) {
+export function Pagination({ currentPage, totalPages, onPageChange }) {
   const prevPageNum = Math.max(1, currentPage - 1)
   const nextPageNum = Math.min(totalPages, currentPage + 1)
 

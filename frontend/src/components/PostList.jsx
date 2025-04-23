@@ -101,7 +101,6 @@ export const PostList = forwardRef(function PostList({ onRefresh }, ref) {
             <Pagination 
               currentPage={currentPage}
               totalPages={totalPages}
-              pageTitle="Guestbook"
               onPageChange={handlePageChange}
             />
           )}

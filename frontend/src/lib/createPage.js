@@ -1,5 +1,6 @@
 import { fetchGraphQL } from './graphql'
 import { Preview } from '../components/Preview'
+import { Suspense } from 'react'
 
 function extractFirstEntry(data) {
   if (!data) return {}
@@ -45,12 +46,14 @@ export function createPage(query, transform, CustomContent, options = {}) {
       const transformedData = transform ? transform(data) : extractFirstEntry(data)
 
       return (
-        <Preview 
-          initialData={transformedData || {}}
-          query={query}
-          variables={variables}
-          CustomContent={CustomContent}
-        />
+        <Suspense fallback={<div className="py-4 text-center">Loading preview...</div>}>
+          <Preview 
+            initialData={transformedData || {}}
+            query={query}
+            variables={variables}
+            CustomContent={CustomContent}
+          />
+        </Suspense>
       )
     } catch (error) {
       console.error('Page Error:', error)

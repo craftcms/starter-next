@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { fetchGraphQL } from '../lib/graphql'
 import { Content } from './Content'
 
@@ -27,9 +28,9 @@ export function Preview({
   CustomContent
 }) {
   const [data, setData] = useState(initialData)
+  const searchParams = useSearchParams()
   
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search)
     const token = searchParams.get('token')
     const isPreview = searchParams.has('x-craft-live-preview')
 
@@ -44,7 +45,7 @@ export function Preview({
         }
       })
     }
-  }, [query, variables])
+  }, [query, variables, searchParams])
 
   const ContentComponent = CustomContent || Content
   return <ContentComponent pageData={data} />

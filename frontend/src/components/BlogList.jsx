@@ -1,80 +1,60 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import { fetchGraphQL } from '../lib/graphql'
-import { BLOG_QUERY } from '../queries/blog'
+import { useEffect, useTransition } from 'react'
+import { useRouter } from 'next/navigation'
 import { Content } from './Content'
-import { Teaser } from './Teaser'
+import { BlogTeaser } from './Teaser'
 import { Pagination } from './Pagination'
-import { useSearchParams, notFound } from 'next/navigation'
 
-const ITEMS_PER_PAGE = 4
-
-export default function BlogList({ initialData }) {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [data, setData] = useState(initialData)
-  const searchParams = useSearchParams()
-  const currentPage = parseInt(searchParams.get('page')) || 1
-  
-  const loadPosts = useCallback(async (page = currentPage) => {
-    setLoading(true)
-    try {
-      const result = await fetchGraphQL(BLOG_QUERY, {
-        limit: ITEMS_PER_PAGE,
-        offset: (page - 1) * ITEMS_PER_PAGE
-      })
-      
-      if (!result?.blogEntries?.[0]) notFound()
-      setData(result)
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load posts'))
-    } finally {
-      setLoading(false)
-    }
-  }, [currentPage])
+export default function BlogList({ data, currentPage, totalPages, baseUrl }) {
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   useEffect(() => {
-    loadPosts(currentPage)
-  }, [currentPage, loadPosts])
-
-  useEffect(() => {
-    if (typeof document !== 'undefined' && data?.blogEntries?.[0]) {
-      const baseTitle = data.blogEntries[0].title
-      const pageSuffix = currentPage > 1 ? ` (Page ${currentPage})` : ''
-      document.title = `${baseTitle}${pageSuffix} | ${process.env.SITE_NAME}`
+    if (typeof document !== 'undefined') {
+      const title = data.blogEntries?.[0]?.title || ''
+      document.title = currentPage > 1
+        ? `${title} - Page ${currentPage}`
+        : title
     }
-  }, [currentPage, data])
+  }, [currentPage, data.blogEntries])
 
-  if (loading) return <div className="py-4">Loading...</div>
-  if (error) return <div className="py-4 text-red-600">Error loading posts: {error.message}</div>
+  if (!data.blogEntries || data.blogEntries.length === 0) {
+    return <div className="p-4">No blog section content found.</div>
+  }
 
   const pageData = {
     ...data.blogEntries[0],
     title: data.blogEntries[0].title || '',
     pageSubheading: data.blogEntries[0].pageSubheading || '',
-    pageContent: data.blogEntries[0].pageContent || '',
+    pageContent: data.blogEntries[0].pageContent || ''
   }
 
-  const totalPages = Math.ceil((data?.entryCount || 0) / ITEMS_PER_PAGE)
+  const handlePageChange = (page) => {
+    startTransition(() => {
+      const href = `${baseUrl}?page=${page}`
+      router.push(href)
+    })
+  }
 
   return (
     <>
       <Content pageData={pageData} />
       <section className="container mx-auto mb-6 px-2 divide-y divide-slate-300">
-        {data.blogPostsEntries?.length > 0 ? (
+        {isPending ? (
+          <div className="py-4 text-center">Loading posts...</div>
+        ) : data.blogPostsEntries && data.blogPostsEntries.length > 0 ? (
           <>
             <div className="sm:grid sm:grid-cols-2 sm:gap-6">
-              {data.blogPostsEntries.map(entry => (
-                <Teaser key={entry.id} entry={entry} featured={true} />
+              {data.blogPostsEntries.map(post => (
+                <BlogTeaser key={post.id} entry={post} />
               ))}
             </div>
             {totalPages > 1 && (
-              <Pagination 
+              <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
-                pageTitle={pageData.title}
-                siteName={process.env.SITE_NAME}
+                onPageChange={handlePageChange}
               />
             )}
           </>
@@ -84,4 +64,4 @@ export default function BlogList({ initialData }) {
       </section>
     </>
   )
-}
+} 

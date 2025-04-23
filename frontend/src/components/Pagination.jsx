@@ -1,23 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-
-export function Pagination({ currentPage, totalPages, pageTitle, siteName }) {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-
-  useEffect(() => {
-    const pageSuffix = currentPage > 1 ? ` (Page ${currentPage})` : ''
-    document.title = `${pageTitle}${pageSuffix} | ${siteName}`
-  }, [currentPage, pageTitle, siteName])
-
-  const updateCurrentPage = (newPage) => {
-    const params = new URLSearchParams(searchParams)
-    params.set('page', newPage.toString())
-    router.push(`?${params.toString()}`)
-  }
-
+export function Pagination({ currentPage, totalPages, onPageChange }) {
   const prevPageNum = Math.max(1, currentPage - 1)
   const nextPageNum = Math.min(totalPages, currentPage + 1)
 
@@ -27,7 +10,7 @@ export function Pagination({ currentPage, totalPages, pageTitle, siteName }) {
         <li>
           {currentPage > 1 ? (
             <button 
-              onClick={() => updateCurrentPage(prevPageNum)} 
+              onClick={() => onPageChange(prevPageNum)} 
               aria-label={`Previous Page (${prevPageNum} of ${totalPages})`}
               className="text-red-600 cursor-pointer font-bold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
             >
@@ -38,7 +21,7 @@ export function Pagination({ currentPage, totalPages, pageTitle, siteName }) {
         <li>
           {currentPage < totalPages ? (
             <button 
-              onClick={() => updateCurrentPage(nextPageNum)} 
+              onClick={() => onPageChange(nextPageNum)} 
               aria-label={`Next Page (${nextPageNum} of ${totalPages})`}
               className="text-red-600 cursor-pointer font-bold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
             >

@@ -20,7 +20,10 @@ export function Content({ pageData = {} }) {
     <div>
       {image?.[0] && (
         <figure>
-          <Image image={image[0]} />
+          <Image 
+            image={image[0]} 
+            alt={image[0].alt || title || 'Page header image'} 
+          />
         </figure>
       )}
 

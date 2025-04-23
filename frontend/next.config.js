@@ -24,11 +24,9 @@ const nextConfig = {
       fullUrl: true,
     },
   } : undefined,
-  experimental: {
-    turbo: {
-      rules: {
-        '*.css': ['style-loader', 'css-loader']
-      }
+  turbopack: {
+    rules: {
+      '*.css': ['style-loader', 'css-loader']
     }
   }
 }

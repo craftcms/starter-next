@@ -1,5 +1,6 @@
 import { fetchGraphQL } from './graphql'
 import { Preview } from '../components/Preview'
+import { Suspense } from 'react'
 
 function extractFirstEntry(data) {
   if (!data) return {}
@@ -26,10 +27,12 @@ export function createPage(query, transform, CustomContent, options = {}) {
       const { slug } = resolvedParams
       const uri = Array.isArray(slug) ? slug.join('/') : slug || ''
       
-      const variables = {
-        uri,
-        ...options.variables
-      }
+      const varsFromOptions = options.variables
+        ? (typeof options.variables === 'function'
+            ? options.variables({ params: resolvedParams, searchParams: resolvedSearchParams })
+            : options.variables)
+        : {}
+      const variables = { uri, ...varsFromOptions }
 
       const isPreview = Boolean(
         resolvedSearchParams?.token && 
@@ -37,18 +40,22 @@ export function createPage(query, transform, CustomContent, options = {}) {
       )
 
       const data = await fetchGraphQL(query, variables, {
-        preview: isPreview
+        preview: isPreview,
+        cache: isPreview ? 'no-store' : 'force-cache',
+        next: { revalidate: isPreview ? 0 : 3600 }
       })
 
       const transformedData = transform ? transform(data) : extractFirstEntry(data)
 
       return (
-        <Preview 
-          initialData={transformedData || {}}
-          query={query}
-          variables={variables}
-          CustomContent={CustomContent}
-        />
+        <Suspense fallback={<div className="py-4 text-center">Loading preview...</div>}>
+          <Preview 
+            initialData={transformedData || {}}
+            query={query}
+            variables={variables}
+            CustomContent={CustomContent}
+          />
+        </Suspense>
       )
     } catch (error) {
       console.error('Page Error:', error)

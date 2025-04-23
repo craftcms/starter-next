@@ -1,11 +1,10 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 export function SkipLink() {
   const pathname = usePathname()
-  const searchParams = useSearchParams()
   const myRef = useRef(null)
   const hasPageBeenRendered = useRef(false)
 
@@ -15,7 +14,7 @@ export function SkipLink() {
     }
     
     hasPageBeenRendered.current = true
-  }, [pathname, searchParams])
+  }, [pathname])
 
   return (
     <a

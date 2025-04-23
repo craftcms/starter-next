@@ -20,10 +20,8 @@ const transform = (data) => {
   }
 }
 
-export default async function Page({ searchParams }) {
-  const data = await fetchGraphQL(GUESTBOOK_QUERY, {}, {
-    preview: Boolean(searchParams?.token && searchParams?.['x-craft-live-preview'])
-  })
+export default async function Page() {
+  const data = await fetchGraphQL(GUESTBOOK_QUERY)
   
   const pageData = transform(data)
 

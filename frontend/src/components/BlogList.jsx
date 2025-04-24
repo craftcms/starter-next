@@ -3,7 +3,7 @@
 import { useEffect, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Content } from './Content'
-import { BlogTeaser } from './Teaser'
+import { Teaser } from './Teaser'
 import { Pagination } from './Pagination'
 
 export default function BlogList({ data, currentPage, totalPages, baseUrl }) {
@@ -47,7 +47,7 @@ export default function BlogList({ data, currentPage, totalPages, baseUrl }) {
           <>
             <div className="sm:grid sm:grid-cols-2 sm:gap-6">
               {data.blogPostsEntries.map(post => (
-                <BlogTeaser key={post.id} entry={post} />
+                <Teaser key={post.id} entry={post} />
               ))}
             </div>
             {totalPages > 1 && (

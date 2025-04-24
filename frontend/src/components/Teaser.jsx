@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-export function BlogTeaser({ entry }) {
+export function Teaser({ entry }) {
   return (
     <article className="py-6 mb-12">
       <figure>

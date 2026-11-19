@@ -1,0 +1,20 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  - uid: 697da4c2-e02f-4f49-9d76-e22609ceda25 # Page
+handle: blogPosts
+maxAuthors: 1
+minAuthors: 1
+name: 'Blog Posts'
+previewTargets:
+  - label: 'Primary entry page'
+    refresh: '1'
+    urlFormat: '{uri}'
+propagationMethod: all
+siteSettings:
+  58ccb571-6c72-449f-8e7b-6f43c5d416b3: # $APP_NAME
+    enabledByDefault: true
+    hasUrls: true
+    template: null
+    uriFormat: 'blog/{slug}'
+type: channel

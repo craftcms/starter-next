@@ -1,0 +1,16 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  - uid: d55d172f-8b8f-4bb7-b680-31249981c350 # Global
+handle: global
+maxAuthors: 1
+minAuthors: 1
+name: Global
+propagationMethod: all
+siteSettings:
+  58ccb571-6c72-449f-8e7b-6f43c5d416b3: # $APP_NAME
+    enabledByDefault: true
+    hasUrls: false
+    template: null
+    uriFormat: null
+type: single

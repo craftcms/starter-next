@@ -1,0 +1,16 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  - uid: 25b2446d-c1d2-4aa1-8184-3147e617f069 # Text
+handle: guestbookPosts
+maxAuthors: 1
+minAuthors: 1
+name: 'Guestbook Posts'
+propagationMethod: all
+siteSettings:
+  58ccb571-6c72-449f-8e7b-6f43c5d416b3: # $APP_NAME
+    enabledByDefault: true
+    hasUrls: false
+    template: null
+    uriFormat: null
+type: channel

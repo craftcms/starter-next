@@ -1,27 +1,17 @@
 defaultPlacement: end
 enableVersioning: true
 entryTypes:
-  - 25b2446d-c1d2-4aa1-8184-3147e617f069 # Text
+  -
+    uid: 25b2446d-c1d2-4aa1-8184-3147e617f069 # Text
 handle: guestbookPosts
 maxAuthors: 1
+minAuthors: 1
 name: 'Guestbook Posts'
-previewTargets:
-  -
-    __assoc__:
-      -
-        - label
-        - 'Primary entry page'
-      -
-        - urlFormat
-        - '{url}'
-      -
-        - refresh
-        - '1'
 propagationMethod: all
 siteSettings:
-  58ccb571-6c72-449f-8e7b-6f43c5d416b3: # Next Starter
+  58ccb571-6c72-449f-8e7b-6f43c5d416b3: # $CRAFT_SITE_NAME
     enabledByDefault: true
-    hasUrls: true
+    hasUrls: false
     template: null
-    uriFormat: 'posts/{slug}'
+    uriFormat: null
 type: channel

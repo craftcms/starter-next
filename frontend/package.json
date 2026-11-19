@@ -6,22 +6,27 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
-    "@tailwindcss/postcss": "^4.1.4",
-    "next": "^15.5.7",
-    "postcss": "^8.5.3",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "tailwindcss": "^4.1.4"
+    "@tailwindcss/postcss": "^4.3.5",
+    "next": "^16.4.5",
+    "postcss": "^8.5.32",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.10",
+    "@babel/core": "^7.29.13",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "eslint": "^9",
-    "eslint-config-next": "^15.3.0",
-    "@tailwindcss/forms": "^0.5.10",
-    "@tailwindcss/typography": "^0.5.16"
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.5",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "^0.5.20"
+  },
+  "overrides": {
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "^6.1.6"
+    }
   }
 }

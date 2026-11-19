@@ -1,4 +1,7 @@
 <?php
+/**
+ * Lets the front end call the GraphQL API from the browser.
+ */
 
 use craft\filters\Cors;
 use craft\helpers\App;

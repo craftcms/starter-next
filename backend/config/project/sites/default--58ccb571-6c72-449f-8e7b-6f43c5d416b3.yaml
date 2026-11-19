@@ -3,7 +3,7 @@ enabled: true
 handle: default
 hasUrls: true
 language: en-US
-name: 'Next Starter'
+name: $CRAFT_SITE_NAME
 primary: true
 siteGroup: 6d0d3aa4-84be-441d-8fcc-2ab2d6db2503 # Starters
 sortOrder: 1

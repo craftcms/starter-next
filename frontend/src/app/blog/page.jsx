@@ -23,7 +23,8 @@ async function getData(page = 1) {
 export const dynamic = 'force-dynamic'
 
 export default async function BlogPage({ searchParams }) {
-  const currentPage = parseInt(searchParams?.page || '1', 10)
+  const { page } = await searchParams
+  const currentPage = parseInt(page || '1', 10)
 
   const data = await getData(currentPage)
 

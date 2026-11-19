@@ -10,10 +10,8 @@ fieldLayouts:
             elementCondition: null
             fieldUid: 6c9778b8-507c-4108-937d-6ceeabf35047 # Image
             handle: logo
-            includeInCards: false
             instructions: null
             label: Logo
-            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -26,10 +24,8 @@ fieldLayouts:
             elementCondition: null
             fieldUid: 163c895f-0c05-4845-80e2-043b2346d830 # Address
             handle: null
-            includeInCards: false
             instructions: null
             label: null
-            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField

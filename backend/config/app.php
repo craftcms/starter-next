@@ -15,9 +15,9 @@
  * If you want to modify the application config for *only* web requests or
  * *only* console requests, create an app.web.php or app.console.php file in
  * your config/ folder, alongside this one.
- * 
+ *
  * Read more about application configuration:
- * https://craftcms.com/docs/5.x/reference/config/app.html
+ * @link https://craftcms.com/docs/5.x/reference/config/app.html
  */
 
 use craft\helpers\App;

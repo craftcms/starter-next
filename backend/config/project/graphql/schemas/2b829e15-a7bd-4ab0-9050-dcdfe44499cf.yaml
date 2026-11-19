@@ -1,7 +1,7 @@
 isPublic: true
 name: 'Public Schema'
 scope:
-  - 'sites.58ccb571-6c72-449f-8e7b-6f43c5d416b3:read' # Next Starter
+  - 'sites.58ccb571-6c72-449f-8e7b-6f43c5d416b3:read' # $CRAFT_SITE_NAME
   - 'elements.drafts:read'
   - 'elements.revisions:read'
   - 'elements.inactive:read'
@@ -16,3 +16,5 @@ scope:
   - 'nestedentryfields.0a58e287-e038-4eb7-ab2a-cf4cbdbe013d:read' # Page content
   - 'nestedentryfields.2bae9725-9546-4f55-a889-56102191aa89:read' # Navigation
   - 'volumes.7b9364bd-2215-495a-8b0b-2280df887a8b:read' # Media
+  - 'directive:parseRefs'
+  - 'directive:transform'

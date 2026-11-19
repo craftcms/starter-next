@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  turbopack: {
+    root: require('node:path').resolve(__dirname, '..'),
+  },
   images: {
-    domains: [process.env.CRAFT_DOMAIN],
     remotePatterns: [
       {
         protocol: 'https',
@@ -24,11 +26,6 @@ const nextConfig = {
       fullUrl: true,
     },
   } : undefined,
-  turbopack: {
-    rules: {
-      '*.css': ['style-loader', 'css-loader']
-    }
-  }
 }
 
 module.exports = nextConfig

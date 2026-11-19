@@ -6,6 +6,7 @@
  * list of the available settings in vendor/craftcms/cms/src/config/GeneralConfig.php.
  *
  * @see \craft\config\GeneralConfig
+ * @link https://craftcms.com/docs/5.x/reference/config/general.html
  */
 
 use craft\config\GeneralConfig;
@@ -20,9 +21,19 @@ return GeneralConfig::create()
     ->preloadSingles()
     // Prevent user enumeration attacks
     ->preventUserEnumeration()
+    // Prevent the front-end Login page
+    ->loginPath(false)
+    // Enable the Twig sandbox for system messages, etc.
+    ->enableTwigSandbox()
     // Set the @webroot alias so the clear-caches command knows where to find CP resources
     ->aliases([
         '@webroot' => dirname(__DIR__) . '/web',
+        // Lets Yii find console controllers in modules/, so `craft help` can list them
+        '@modules' => dirname(__DIR__) . '/modules',
         '@preview' => App::env('PRIMARY_SITE_URL'),
     ])
-    ->headlessMode();
+    // Serve only the control panel and the GraphQL API; the front end renders pages
+    ->headlessMode(true)
+    // Leave CORS to the filter in config/app.web.php, instead of allowing every origin
+    ->allowedGraphqlOrigins(false)
+;

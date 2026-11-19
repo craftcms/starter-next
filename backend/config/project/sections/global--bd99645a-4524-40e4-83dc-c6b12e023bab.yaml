@@ -1,13 +1,15 @@
 defaultPlacement: end
 enableVersioning: true
 entryTypes:
-  - d55d172f-8b8f-4bb7-b680-31249981c350 # Global
+  -
+    uid: d55d172f-8b8f-4bb7-b680-31249981c350 # Global
 handle: global
 maxAuthors: 1
+minAuthors: 1
 name: Global
 propagationMethod: all
 siteSettings:
-  58ccb571-6c72-449f-8e7b-6f43c5d416b3: # Next Starter
+  58ccb571-6c72-449f-8e7b-6f43c5d416b3: # $CRAFT_SITE_NAME
     enabledByDefault: true
     hasUrls: false
     template: null

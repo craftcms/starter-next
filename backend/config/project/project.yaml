@@ -1,4 +1,4 @@
-dateModified: 1751441114
+dateModified: 1794255348
 elementSources:
   craft\elements\Entry:
     -
@@ -126,7 +126,7 @@ fs:
       expires: '1 years'
       hasUrls: true
       localFsPath: '@webroot/uploads'
-      localFsUrl: $CRAFT_BASE_CP_URL/uploads
+      localFsUrl: '@web/uploads'
       subpath: null
     type: craft\cloud\fs\AssetsFs
 meta:
@@ -142,11 +142,10 @@ meta:
     6d0d3aa4-84be-441d-8fcc-2ab2d6db2503: Starters # Starters
     6d2e5577-5ded-43c9-96e2-d4fc4c770fe9: Text # Text
     7b9364bd-2215-495a-8b0b-2280df887a8b: Media # Media
-    7dac7ab3-08a0-4af8-ba7c-cbecd0726f08: Simple # Simple
     9d082133-4710-4468-ab39-80db8c9fcf59: Code # Code
     9d42aa56-4a66-4d0b-b8a9-84a4cb387788: 'Text block' # Text block
     25b2446d-c1d2-4aa1-8184-3147e617f069: Text # Text
-    58ccb571-6c72-449f-8e7b-6f43c5d416b3: 'Next Starter' # Next Starter
+    58ccb571-6c72-449f-8e7b-6f43c5d416b3: $CRAFT_SITE_NAME # $CRAFT_SITE_NAME
     70b2614b-639a-4de2-8c11-3851d36d6f8c: 'Blog Categories' # Blog Categories
     163c895f-0c05-4845-80e2-043b2346d830: Address # Address
     0413e9dc-1c8a-4221-b81d-c9f6c0594cbd: Hero # Hero
@@ -157,7 +156,6 @@ meta:
     a06e695e-af7f-4a1b-84a7-575ec935e293: Video # Video
     aef20f9c-5c84-4c50-8a18-acf0452db62f: Guestbook # Guestbook
     b5b7bfc5-a39e-4d1a-89be-51f0afeb5ce0: Avatar # Avatar
-    b579b454-12bd-4710-a436-c26907141957: Full # Full
     bd99645a-4524-40e4-83dc-c6b12e023bab: Global # Global
     c4b4f50d-7d62-4a4c-bbf8-7aae00fd82c7: Pages # Pages
     c7d2eb61-cdde-4a76-88a9-eb30ddcf155b: Guestbook # Guestbook
@@ -170,11 +168,11 @@ plugins:
   ckeditor:
     edition: standard
     enabled: true
-    schemaVersion: 3.0.0.0
+    schemaVersion: 5.6.0.0
 system:
   edition: solo
   live: true
-  name: 'Next Starter'
+  name: $CRAFT_SITE_NAME
   retryDuration: null
-  schemaVersion: 5.8.0.3
+  schemaVersion: 5.12.0.1
   timeZone: America/Los_Angeles

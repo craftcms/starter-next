@@ -9,7 +9,7 @@ import { SkipLink } from '../components/SkipLink'
 
 export const metadata = {
   title: process.env.SITE_NAME,
-  description: 'A minimal, production-ready starter for Next.js 15 and Craft CMS'
+  description: 'A minimal, production-ready starter for Next.js and Craft CMS'
 }
 
 export default async function RootLayout({ children }) {
